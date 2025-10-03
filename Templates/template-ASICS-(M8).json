@@ -45,7 +45,7 @@
       "responses": [
         {
           "id": "p1r1",
-          "name": "Task 1-3: XLOOKUP",
+          "name": "Task 1-3 (XLOOKUP)",
           "include": true,
           "options": {
             "Perfect": "The XLOOKUP formulas are perfect. This successfully sets up your later analysis and demonstrates proficiency with the formula.",
@@ -55,7 +55,7 @@
         },
         {
           "id": "p1r2",
-          "name": "Task 4-5: PivotTable, Average Spent",
+          "name": "Task 4-5 (PivotTable, Average Spent)",
           "include": true,
           "options": {
             "Accurate": "The PivotTable for Task 4 is perfect!",
@@ -65,7 +65,7 @@
         },
         {
           "id": "p1r3",
-          "name": "Task 6: Prediction & Analysis",
+          "name": "Task 6 (Prediction & Analysis)",
           "include": true,
           "options": {
             "Thorough": "You provided excellent considerations for customer behaviour! You demonstrate clear subject expertise, and I recommend leveraging this as one of your key strengths.",
@@ -82,7 +82,7 @@
       "responses": [
         {
           "id": "p2r1",
-          "name": "Task 8-9: PivotTable, Revenue",
+          "name": "Task 8-9 (PivotTable, Revenue)",
           "include": true,
           "options": {
             "Perfect": "Orders table is perfect!",
@@ -92,7 +92,7 @@
         },
         {
           "id": "p2r2",
-          "name": "Task 10-12: PivotTable, Referral Cost, and Avg Purchases",
+          "name": "Task 10-12 (PivotTable, Referral Cost, and Avg Purchases)",
           "include": true,
           "options": {
             "Perfect": "Everything from the PivotTable to the formula work is spot-on.",
@@ -139,7 +139,7 @@
         },
         {
           "id": "p3r4",
-          "name": "Task 13: Character of Success",
+          "name": "Task 13 (Character of Success)",
           "include": true,
           "options": {
             "Clear & Accurate": "Great evaluation of the success of the program! You had a clear stance, were thorough with your reasoning, and did a great job incorporating our work from throughout the milestone.",
@@ -150,7 +150,7 @@
         },
         {
           "id": "p3r5",
-          "name": "Task 14: ChatGPT Suggestion",
+          "name": "Task 14 (ChatGPT Suggestion)",
           "include": true,
           "options": {
             "Integrated & Analysed": "You did a great job combining the feedback from ChatGPT with your own insights!",
@@ -160,7 +160,7 @@
         },
         {
           "id": "p3r6",
-          "name": "Task 15: Additional Information",
+          "name": "Task 15 (Additional Information)",
           "include": true,
           "options": {
             "Insightful": "Great insight to cap off the main section of the milestone.",

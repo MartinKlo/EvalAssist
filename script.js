@@ -80,23 +80,23 @@ themeToggle.addEventListener('click', ()=>{
 initTheme();
 
 // --- Tabs and Evaluation logic ---
-const tabEval = document.getElementById('tab-eval');
-const tabTemplate = document.getElementById('tab-template');
-const panelEval = document.getElementById('panel-eval');
-const panelTemplate = document.getElementById('panel-template');
-
+// Tab handling: support dynamic tabs (Evaluation, Template, Blanks, etc.)
+const allTabs = Array.from(document.querySelectorAll('[role="tab"]'));
 function activateTab(tab){
-	// deactivate all
-	[tabEval, tabTemplate].forEach(t => t.setAttribute('aria-selected','false'));
-	[panelEval, panelTemplate].forEach(p => p.hidden = true);
+	// deactivate all tabs and hide their panels
+	allTabs.forEach(t => t.setAttribute('aria-selected','false'));
+	allTabs.forEach(t => {
+		const p = document.getElementById(t.getAttribute('aria-controls'));
+		if(p) p.hidden = true;
+	});
 	// activate selected
 	tab.setAttribute('aria-selected','true');
 	const panel = document.getElementById(tab.getAttribute('aria-controls'));
 	if(panel) panel.hidden = false;
 }
 
-tabEval.addEventListener('click', ()=> activateTab(tabEval));
-tabTemplate.addEventListener('click', ()=> activateTab(tabTemplate));
+// Wire click handlers for all tabs
+allTabs.forEach(t => t.addEventListener('click', ()=> activateTab(t)));
 
 // Form / evaluation store
 const evalForm = document.getElementById('evalForm');
@@ -104,34 +104,107 @@ const evalForm = document.getElementById('evalForm');
 // Feedback templates stored in localStorage — map keys to template text
 // Example CSV format expected: key,template
 // Keys might be 'quality:excellent', 'completeness:partial', 'check:hasReferences', etc.
-// legacy: flat templates mapping; new: templatesByProject maps projectName -> { key: template }
-let templatesByProject = {};
+// legacy: flat templates mapping; new: templates mem map per project in `templatesMem`
+// Templates are stored in-memory only. We intentionally do NOT persist
+// template mappings to localStorage. This prevents stale/local copies from
+// overriding the on-disk Templates/ JSON files.
+let templatesMem = {};
 const TEMPLATES_KEY = 'eval_feedback_templates_v1';
 const DEFAULT_PROJECT_KEY = '__global__';
 const SELECTED_PROJECT_KEY = 'selected_project_v1';
 const INCLUDE_STATE_KEY = 'eval_template_include_state_v1';
 const EVALUATOR_NAME = 'Evaluator';
 
-function loadTemplates(){
+// Evaluator/account settings keys
+const EVALUATOR_NAME_KEY = 'eval_evaluator_name_v1';
+
+// account dialog elements (created in DOM)
+const accountBtn = document.getElementById('accountBtn');
+const accountDialog = document.getElementById('accountDialog');
+const evaluatorNameInput = document.getElementById('evaluatorName');
+
+function loadEvaluatorName(){
 	try{
-		const raw = localStorage.getItem(TEMPLATES_KEY);
-		if(!raw) return;
-		const parsed = JSON.parse(raw);
-		// Migration: if parsed looks like flat mapping (values are strings), convert to default project
-		const isFlat = Object.values(parsed).every(v => typeof v === 'string');
-		if(isFlat){
-			templatesByProject = {};
-			templatesByProject[DEFAULT_PROJECT_KEY] = parsed;
-		} else {
-			// assume already stored as per-project mapping
-			templatesByProject = parsed || {};
-		}
-	}catch(e){ templatesByProject = {}; }
+		const name = localStorage.getItem(EVALUATOR_NAME_KEY);
+		if(name && evaluatorNameInput) evaluatorNameInput.value = name;
+	}catch(e){}
 }
 
-function saveTemplates(){
-	try{ localStorage.setItem(TEMPLATES_KEY, JSON.stringify(templatesByProject)); }catch(e){}
+function saveEvaluatorName(){
+	try{
+		const val = evaluatorNameInput ? (evaluatorNameInput.value || '') : '';
+		localStorage.setItem(EVALUATOR_NAME_KEY, val);
+		// update the in-memory constant for display (used when generating comments)
+		// We intentionally do not reassign the const; instead, store on window for generateComments to read
+		window.__EVALUATOR_NAME = val;
+	}catch(e){ console.warn('Failed to save evaluator name', e); }
 }
+
+// open dialog when account button clicked
+// Helper to open/close dialog with a fallback when <dialog> API isn't supported
+function openAccountDialog(){
+	loadEvaluatorName();
+	try{
+		if(accountDialog && typeof accountDialog.showModal === 'function'){
+			accountDialog.showModal();
+			return;
+		}
+	}catch(e){ console.warn('dialog.showModal failed', e); }
+	// fallback: make dialog-like element visible
+	if(accountDialog){
+		accountDialog.setAttribute('open','');
+		accountDialog.style.display = 'block';
+		accountDialog.style.position = 'fixed';
+		accountDialog.style.left = '50%';
+		accountDialog.style.top = '50%';
+		accountDialog.style.transform = 'translate(-50%,-50%)';
+		accountDialog.setAttribute('aria-hidden','false');
+	}
+}
+
+function closeAccountDialog(){
+	try{
+		if(accountDialog && typeof accountDialog.close === 'function'){
+			accountDialog.close();
+			return;
+		}
+	}catch(e){ /* ignore */ }
+	if(accountDialog){
+		accountDialog.removeAttribute('open');
+		accountDialog.style.display = 'none';
+		accountDialog.setAttribute('aria-hidden','true');
+	}
+}
+
+if(accountBtn){
+	accountBtn.addEventListener('click', ()=>{
+		try{ openAccountDialog(); }catch(e){ console.warn(e); }
+	});
+}
+
+// close dialog handler
+const closeEvaluator = document.getElementById('closeEvaluator');
+if(closeEvaluator){ closeEvaluator.addEventListener('click', ()=> closeAccountDialog()); }
+
+// save handler on dialog form submission
+const accountForm = document.getElementById('accountForm');
+if(accountForm){
+	accountForm.addEventListener('submit', (e)=>{
+		e.preventDefault();
+		saveEvaluatorName();
+		accountDialog.close();
+		showToast('Evaluator name saved');
+	});
+}
+
+// ensure global evaluator name value available for generateComments
+window.__EVALUATOR_NAME = (function(){ try{ return localStorage.getItem(EVALUATOR_NAME_KEY) || EVALUATOR_NAME; }catch(e){ return EVALUATOR_NAME; } })();
+
+// No-op loaders for persistent templates. We intentionally do not save
+// templates to localStorage. Use the in-memory map `templatesMem` and
+// prefer JSON files under Templates/ loaded via fetch.
+function loadTemplates(){ /* intentionally no-op */ }
+function saveTemplates(){ /* intentionally no-op */ }
 
 function loadSelectedProject(){
 	try{
@@ -160,36 +233,21 @@ function getCurrentProjectName(){
 const editorProjectLabel = document.getElementById('editorProject');
 const exportTemplatesBtn = document.getElementById('exportTemplates');
 const clearTemplatesBtn = document.getElementById('clearTemplates');
-const resetDevMemoryBtn = document.getElementById('resetDevMemory');
 
 function renderTemplateEditor(){
 	const proj = getCurrentProjectName();
 	editorProjectLabel.textContent = proj === DEFAULT_PROJECT_KEY ? 'Global' : proj;
-	// No editable table is shown; templates are managed via JSON import/export and will appear in selects
-	templatesByProject[proj] = templatesByProject[proj] || {};
+	// ensure an in-memory map exists for the project so selects and imports have a place to merge
+	templatesMem[proj] = templatesMem[proj] || {};
 }
 
 // Project JSON storage: each project may provide a structured JSON defining sections and responses.
 // We'll keep a separate in-memory map projectJsons[projectName] = { name, sections: [ { id, title, responses: [ { id, name, include, options: [keys...] } ] } ] }
 const projectJsons = {};
 
-function loadProjectJsonsFromTemplatesMap(){
-	// Backwards compatibility: templatesByProject currently stores flat key->template maps.
-	// For the new schema we expect JSON uploads to populate projectJsons directly. If a project has no JSON entry,
-	// we synthesize a basic structure from available template keys (a single 'general' section with N response slots)
-	Object.keys(templatesByProject).forEach(proj => {
-		if(!projectJsons[proj]){
-			// check if there's a stored JSON in templatesByProject under a special key __project_json
-			if(templatesByProject[proj] && templatesByProject[proj]['__project_json']){
-				try{
-					projectJsons[proj] = JSON.parse(templatesByProject[proj]['__project_json']);
-				}catch(e){
-					projectJsons[proj] = null;
-				}
-			}
-		}
-	});
-}
+// We no longer synthesise project JSONs from a persisted templates map. 
+// Project JSONs come either from the Templates/ folder or from uploaded
+// structured JSON files and are kept only in-memory (projectJsons).
 
 function ensureProjectJson(proj){
 	projectJsons[proj] = projectJsons[proj] || { name: proj === DEFAULT_PROJECT_KEY ? 'Global' : proj, sections: [ { id: 'general', title: 'General', responses: [ { id: 'r1', name: 'Response 1', include: true, options: [] }, { id: 'r2', name: 'Response 2', include: true, options: [] }, { id: 'r3', name: 'Response 3', include: true, options: [] } ] } ] };
@@ -250,14 +308,13 @@ function renderSectionsForProject(proj){
 	applyIncludeStatesToEvalUI();
 }
 
-// Helper to import a project JSON (strict schema) and store in projectJsons and as special key in templatesByProject for persistence
+// Helper to import a project JSON (strict schema) and store in projectJsons (in-memory)
 function importProjectJson(proj, jsonObj){
 	// expected shape: { name: "Project Name", sections: [ { id: "s1", title: "Section 1", responses: [ { id: "r1", name: "Response 1", include: true, options: ["key1","key2"] } ] } ] }
+	// Store structured project JSON in-memory only. We intentionally do not persist
+	// the project JSON to localStorage so the Templates/ folder remains the
+	// authoritative source on disk.
 	projectJsons[proj] = jsonObj;
-	// persist a serialized copy in templatesByProject under reserved key '__project_json' so it survives reloads
-	templatesByProject[proj] = templatesByProject[proj] || {};
-	templatesByProject[proj]['__project_json'] = JSON.stringify(jsonObj);
-	saveTemplates();
 	// If the user previously saved include/exclude states for this project, they may
 	// override the `include` flags from the newly imported JSON. Clear any saved
 	// include-state for this project so the JSON's include/defaults take effect.
@@ -278,7 +335,7 @@ function importProjectJson(proj, jsonObj){
 function populateResponseSelects(){
 	const selects = Array.from(document.querySelectorAll('.response-select'));
 	const proj = getCurrentProjectName();
-	const map = templatesByProject[proj] || templatesByProject[DEFAULT_PROJECT_KEY] || {};
+	const map = templatesMem[proj] || templatesMem[DEFAULT_PROJECT_KEY] || {};
 	// filter out reserved/internal keys (like the persisted project JSON) so they don't appear as template options
 	const keys = Object.keys(map).filter(k => k !== '__project_json' && k !== '').sort();
 	selects.forEach(sel => {
@@ -430,12 +487,12 @@ exportTemplatesBtn.addEventListener('click', ()=>{
 		// Prefer structured project JSON if present
 		let toExport = null;
 		if(projectJsons[proj]) toExport = projectJsons[proj];
-		else if(templatesByProject[proj] && templatesByProject[proj]['__project_json']){
-			try{ toExport = JSON.parse(templatesByProject[proj]['__project_json']); }catch(e){ toExport = null; }
+		else if(templatesMem[proj] && templatesMem[proj]['__project_json']){
+			try{ toExport = JSON.parse(templatesMem[proj]['__project_json']); }catch(e){ toExport = null; }
 		}
 		if(!toExport){
-			// fallback: export flat map
-			toExport = templatesByProject[proj] || {};
+			// fallback: export in-memory flat map
+			toExport = templatesMem[proj] || {};
 		}
 		const json = JSON.stringify(toExport, null, 2);
 		const blob = new Blob([json], {type:'application/json'});
@@ -446,24 +503,11 @@ exportTemplatesBtn.addEventListener('click', ()=>{
 clearTemplatesBtn.addEventListener('click', ()=>{
 	const proj = getCurrentProjectName();
 	if(confirm('Clear all templates for '+(proj===DEFAULT_PROJECT_KEY?'Global':proj)+'?')){
-		templatesByProject[proj] = {};
-		saveTemplates(); renderTemplateEditor();
+	// clear in-memory templates for the project only; do not touch on-disk Templates/
+	templatesMem[proj] = {};
+	renderTemplateEditor();
 	}
 });
-
-// Developer helper: clear persisted localStorage keys used by the app
-if(resetDevMemoryBtn){
-	resetDevMemoryBtn.addEventListener('click', ()=>{
-		if(!confirm('This will remove stored templates, include states, and selected project from your browser for this app. Continue?')) return;
-		try{
-			localStorage.removeItem(TEMPLATES_KEY);
-			localStorage.removeItem(INCLUDE_STATE_KEY);
-			localStorage.removeItem(SELECTED_PROJECT_KEY);
-		}catch(e){ console.warn('Failed to clear dev memory', e); }
-		// reload so UI reflects cleared state
-		location.reload();
-	});
-}
 
 // Re-render template editor when selected project changes
 const projectLinks = Array.from(sidebar.querySelectorAll('.project-link'));
@@ -490,22 +534,54 @@ document.querySelectorAll('.template-includes .include-checkbox').forEach(chk =>
 // apply saved include states for current project
 applySavedIncludeStatesForProject(getCurrentProjectName());
 
-// Load any project JSONs stored in templatesByProject.__project_json
-Object.keys(templatesByProject).forEach(proj => {
-	try{
-		if(templatesByProject[proj] && templatesByProject[proj]['__project_json']){
-			projectJsons[proj] = JSON.parse(templatesByProject[proj]['__project_json']);
-		}
-	}catch(e){ /* ignore parse errors */ }
+// Load structured project JSONs from the Templates/ folder (if available)
+// Attempt to load structured project JSON files from the Templates/ folder in the repo.
+// We build candidate filenames from the sidebar project names and try fetching them.
+async function fetchTemplatesFolder(){
+	const links = Array.from(sidebar.querySelectorAll('.project-link'));
+	const names = links.map(a => a.textContent.trim());
+	// also include a couple of common filenames if present
+	const candidates = names.map(n => 'Templates/' + n.replace(/\s+/g,'-') + '.json');
+	// Also include known file present in repository as a fallback
+	candidates.push('Templates/template-ASICS-(M8).json');
+
+	await Promise.all(candidates.map(async (path) => {
+		try{
+			const resp = await fetch(path, { cache: 'no-store' });
+			if(!resp.ok) return;
+			const parsed = await resp.json();
+			// determine project mapping: use parsed.name or infer from filename
+			let projName = (parsed && parsed.name) ? parsed.name : null;
+			if(!projName){
+				// try to infer from filename (strip Templates/ and extension)
+				const base = path.replace(/^.*\//, '').replace(/\.json$/i, '').replace(/-/g,' ');
+				projName = base;
+			}
+			projectJsons[projName] = parsed;
+			templatesMem[projName] = templatesMem[projName] || {};
+			// attach inline option text map to templatesMem if provided as flat map
+			// if parsed appears to be flat (object with keys mapping to strings) we merge
+			if(parsed && !Array.isArray(parsed) && parsed.sections == null){
+				Object.keys(parsed).forEach(k => { templatesMem[projName][k] = parsed[k]; });
+			}
+		}catch(err){ /* ignore fetch/parse errors */ }
+	}));
+}
+
+// Fetch templates from Templates/ then render UI
+fetchTemplatesFolder().finally(()=>{
+	// render UI after we attempted to load Templates/ folder
+	renderTemplateEditor();
+	populateResponseSelects();
+	applySavedIncludeStatesForProject(getCurrentProjectName());
+	renderSectionsForProject( getCurrentProjectName() );
 });
-// Render sections for active project
-renderSectionsForProject( getCurrentProjectName() );
 
 function generateComments(resp){
 	// Build a structured feedback message:
 	// greeting, introduction, overview, specific feedback lines, conclusion, signoff, evaluator
 	const currentProject = getCurrentProjectName();
-	const currentTemplates = (templatesByProject[currentProject] || templatesByProject[DEFAULT_PROJECT_KEY] || {});
+	const currentTemplates = (templatesMem[currentProject] || templatesMem[DEFAULT_PROJECT_KEY] || {});
 
 	// messages come from the project's JSON only. Do not provide any script-side fallbacks.
 	const proj = projectJsons[currentProject] || {};
@@ -517,18 +593,36 @@ function generateComments(resp){
 	const overviewLine = (messages.overview && messages.overview[resp.quality]) ? messages.overview[resp.quality] : null;
 
 	// specific feedback lines derived from selectedKeys
-	const specifics = [];
+	// Group specifics by section so we can add spacing between collapsible groups
+	const specificsBySection = [];
 	if(Array.isArray(resp.selectedKeys)){
+		// build a map: sectionId -> array of lines
+		const map = Object.create(null);
 		resp.selectedKeys.forEach(sel => {
 			if(!sel) return;
-			// sel may be { key, inlineText, label }
+			const sectionId = sel.section || '__misc__';
 			const label = sel.label || (sel.key || '').toString();
 			let bodyText = null;
-			// prefer inline text attached to the option (from project JSON or uploaded templates)
 			if(sel.inlineText) bodyText = templateReplace(sel.inlineText, resp);
 			else if(sel.key){ const val = currentTemplates[sel.key]; if(val) bodyText = templateReplace(val, resp); }
-			// Only include specifics when we have actual feedback text from JSON/templates
-			if(bodyText) specifics.push(`${label}: ${bodyText}`);
+			if(!bodyText) return; // skip entries without actual feedback text
+			map[sectionId] = map[sectionId] || [];
+			// prefix each detailed feedback line with a bullet for readability
+			map[sectionId].push('\u2022 ' + `${label}: ${bodyText}`);
+		});
+
+		// Preserve project section ordering when emitting groups
+		const projSections = (proj && Array.isArray(proj.sections)) ? proj.sections : [];
+		projSections.forEach(sec => {
+			const lines = map[sec.id];
+			if(lines && lines.length) specificsBySection.push(lines.join('\n'));
+			// remove from map to avoid double-emitting
+			if(map[sec.id]) delete map[sec.id];
+		});
+		// any remaining (unknown) sections - emit in insertion order
+		Object.keys(map).forEach(k => {
+			const lines = map[k];
+			if(lines && lines.length) specificsBySection.push(lines.join('\n'));
 		});
 	}
 
@@ -540,13 +634,19 @@ function generateComments(resp){
 	// assemble final message with spacing — only include parts that exist in JSON/templates
 	const sections = [];
 	if(greetingLine) sections.push(greetingLine);
-	if(introLine) sections.push(introLine);
-	if(overviewLine) sections.push(overviewLine);
-	if(specifics.length) sections.push(specifics.join('\n'));
+	// Show intro and overview together with a single newline between them
+	if(introLine && overviewLine){
+		sections.push(introLine + '\n' + overviewLine);
+	} else {
+		if(introLine) sections.push(introLine);
+		if(overviewLine) sections.push(overviewLine);
+	}
+	if(specificsBySection.length) sections.push(specificsBySection.join('\n\n'));
 	if(conclusionLine) sections.push(conclusionLine);
 	if(signoff) sections.push(signoff);
-	// evaluator name is optional; include only if provided in JSON or as a configured constant
-	if(EVALUATOR_NAME) sections.push(EVALUATOR_NAME);
+	// evaluator name is optional; include only if provided in JSON or as a configured value
+	const runtimeEvaluator = (window && window.__EVALUATOR_NAME) ? window.__EVALUATOR_NAME : EVALUATOR_NAME;
+	if(runtimeEvaluator) sections.push(runtimeEvaluator);
 
 	return sections.join('\n\n');
 }
@@ -623,14 +723,13 @@ templatesJsonUpload.addEventListener('change', (e) => {
 					importProjectJson(proj, parsed);
 					alert('Project JSON imported for project: ' + (proj === DEFAULT_PROJECT_KEY ? 'Global' : proj));
 				} else {
-					// backwards compatibility: flat map -> merge into templatesByProject
-					templatesByProject[proj] = templatesByProject[proj] || {};
-					Object.keys(parsed).forEach(k => { templatesByProject[proj][k] = parsed[k]; });
-					saveTemplates();
+					// backwards compatibility: flat map -> merge into in-memory templates
+					templatesMem[proj] = templatesMem[proj] || {};
+					Object.keys(parsed).forEach(k => { templatesMem[proj][k] = parsed[k]; });
 					renderTemplateEditor();
 					populateResponseSelects();
 					applySavedIncludeStatesForProject(proj);
-					alert('Templates (flat JSON) imported and saved to localStorage for project: ' + (proj === DEFAULT_PROJECT_KEY ? 'Global' : proj));
+					alert('Templates (flat JSON) imported into memory for project: ' + (proj === DEFAULT_PROJECT_KEY ? 'Global' : proj));
 				}
 			} else {
 				alert('Uploaded JSON must be an object');
@@ -675,4 +774,94 @@ templatesJsonUpload.addEventListener('change', (e) => {
 
 	// initial preview
 	updatePreview();
+
+// --- Blanks panel behavior ---
+const blanksSelect = document.getElementById('blanksSelect');
+const blanksName = document.getElementById('blanksName');
+const blanksPreview = document.getElementById('blanksPreview');
+const blanksCopy = document.getElementById('blanksCopy');
+const BLANKS_KEY = 'eval_blanks_last_choice_v1';
+
+function generateBlankText(choice){
+	// Use the user-provided message template. Replace {REASON} with the
+	// lowercase version of the dropdown option and {Evaluator} with the
+	// runtime evaluator name.
+	let lower = String(choice || '').toLowerCase();
+	// ensure the phrase contains a leading 'is ' (e.g., 'is corrupted', 'is blank')
+	if(lower && !/^is\s+/i.test(lower)){
+		lower = 'is ' + lower;
+	}
+	const runtimeEvaluator = (window && window.__EVALUATOR_NAME) ? window.__EVALUATOR_NAME : EVALUATOR_NAME;
+	const studentName = (blanksName && blanksName.value) ? blanksName.value : '{STUDENT}';
+	const tpl = `Hi ${studentName},\nUnfortunately I had to give you 0 for this submission because this submission ${lower} and I was unable to view your work. If this was a mistake, please use the HelpHub to request an extension as soon as possible. Extensions are not guaranteed but are more likely to be approved if requested within a few days of receiving this comment. If your extension request is approved, you must resubmit the correct file for it to be evaluated.\nThank you,\n${runtimeEvaluator}`;
+	return tpl;
+}
+
+function loadBlanksChoice(){
+	try{
+		const stored = localStorage.getItem(BLANKS_KEY);
+		if(stored && blanksSelect) blanksSelect.value = stored;
+		if(blanksSelect) blanksSelect.dispatchEvent(new Event('change'));
+	}catch(e){}
+}
+
+function saveBlanksChoice(val){
+	try{ localStorage.setItem(BLANKS_KEY, val); }catch(e){}
+}
+
+if(blanksSelect){
+	blanksSelect.addEventListener('change', (e)=>{
+		const v = e.target.value || '';
+		const txt = generateBlankText(v);
+		if(blanksPreview) blanksPreview.textContent = txt;
+		saveBlanksChoice(v);
+	});
+}
+
+if(blanksName){
+	blanksName.addEventListener('input', ()=>{
+		// regenerate preview when name changes
+		const v = blanksSelect ? (blanksSelect.value || '') : '';
+		if(blanksPreview) blanksPreview.textContent = generateBlankText(v);
+	});
+}
+
+if(blanksCopy){
+	blanksCopy.addEventListener('click', async ()=>{
+		if(!blanksPreview) return;
+		const text = blanksPreview.textContent || '';
+		try{
+			await navigator.clipboard.writeText(text);
+			showToast('Copied to clipboard');
+		}catch(err){
+			// no reliable fallback for div text selection in all browsers; attempt a temporary textarea
+			try{
+				const ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); showToast('Copied to clipboard');
+			}catch(e){ showToast('Copy failed'); }
+		}
+	});
+}
+
+// load saved blanks choice on startup
+loadBlanksChoice();
+// ensure preview reflects initial student name if present
+if(blanksSelect && blanksPreview){ blanksPreview.textContent = generateBlankText(blanksSelect.value || ''); }
+
+	// Ensure reset clears the currently-selected response options and scrolls to top.
+	// We use a microtask delay so the form's native reset (if any) runs first.
+	evalForm.addEventListener('reset', (e) => {
+		setTimeout(() => {
+			// clear all response selects
+			document.querySelectorAll('.response-select').forEach(sel => {
+				try{ sel.value = ''; sel.selectedIndex = 0; sel.dispatchEvent(new Event('change', { bubbles: true })); }catch(e){}
+			});
+			// clear generated output
+			const genEl = document.getElementById('evalGenerated');
+			if(genEl) genEl.textContent = 'No feedback generated yet.';
+			// update live preview
+			try{ updatePreview(); }catch(e){}
+			// scroll to top of page for user
+			try{ window.scrollTo && window.scrollTo({ top: 0, behavior: 'smooth' }); }catch(e){ window.scrollTo(0,0); }
+		}, 0);
+	});
 

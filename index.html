@@ -54,7 +54,16 @@
   <main id="main">
     <div class="title-row">
       <h1>Evaluation Assistant</h1> <!-- Treat this as a title for page-->
-      <button id="themeToggle" class="theme-toggle" aria-pressed="false" aria-label="Toggle dark mode">🌙</button>
+      <div class="title-controls">
+        <button id="themeToggle" class="theme-toggle" aria-pressed="false" aria-label="Toggle dark mode">🌙</button>
+        <button id="accountBtn" class="account-btn" aria-haspopup="dialog" aria-controls="accountDialog" aria-label="Open account settings">
+          <!-- Person icon (inline SVG) -->
+          <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5z" fill="currentColor" />
+            <path d="M4 20c0-3.314 2.686-6 6-6h4c3.314 0 6 2.686 6 6v1H4v-1z" fill="currentColor" />
+          </svg>
+        </button>
+      </div>
     </div>
     <p>Select a project from the sidebar to start an evaluation.</p>
     <div class="selected-project-row">
@@ -63,8 +72,9 @@
   <!-- Tabs: Evaluation / Template -->
     <div class="tabs" id="tabs">
       <div role="tablist" aria-label="Evaluation tabs" class="tablist">
-        <button role="tab" aria-selected="true" aria-controls="panel-eval" id="tab-eval" class="tab">Evaluation</button>
+    <button role="tab" aria-selected="true" aria-controls="panel-eval" id="tab-eval" class="tab">Evaluation</button>
   <button role="tab" aria-selected="false" aria-controls="panel-template" id="tab-template" class="tab">Template</button>
+  <button role="tab" aria-selected="false" aria-controls="panel-blanks" id="tab-blanks" class="tab">Blanks</button>
       </div>
 
       <section id="panel-eval" role="tabpanel" aria-labelledby="tab-eval" class="tabpanel">
@@ -110,7 +120,6 @@
           <div class="template-controls">
             <button id="exportTemplates">Export templates (JSON)</button>
             <button id="clearTemplates">Clear templates for project</button>
-            <button id="resetDevMemory" title="Remove stored templates, include-states, and selected project from browser storage">Clear stored templates & project JSON</button>
           </div>
 
           <!-- Template include controls will be rendered dynamically from project JSON -->
@@ -119,9 +128,49 @@
           <!-- Template list removed (editable key/template table removed as requested) -->
         </div>
       </section>
+      <section id="panel-blanks" role="tabpanel" aria-labelledby="tab-blanks" class="tabpanel" hidden>
+        <h3>Blanks</h3>
+
+        <div class="field">
+          <label for="blanksName">Name</label>
+          <input id="blanksName" type="text" placeholder="Student name" />
+        </div>
+
+        <div class="field">
+          <label for="blanksSelect">Choose a blank type</label>
+          <select id="blanksSelect">
+            <option value="Blank">Blank</option>
+            <option value="Corrupted">Corrupted</option>
+          </select>
+        </div>
+
+        <div class="blanks-preview">
+          <div class="preview-header">
+            <label for="blanksPreview">Preview</label>
+            <button id="blanksCopy" type="button" aria-label="Copy to clipboard" title="Copy to clipboard" class="icon-btn">
+              <span class="icon-label">COPY</span>
+            </button>
+          </div>
+          <div id="blanksPreview" class="eval-generated">No preview generated yet.</div>
+        </div>
+      </section>
     </div>
   </main>
 
+  <!-- Evaluator account dialog -->
+  <dialog id="accountDialog" class="account-dialog" aria-label="Evaluator settings">
+    <form method="dialog" id="accountForm">
+      <h3>Evaluator settings</h3>
+      <div class="field">
+        <label for="evaluatorName">Evaluator name</label>
+        <input id="evaluatorName" name="evaluatorName" type="text" />
+      </div>
+      <div class="form-actions">
+        <button id="saveEvaluator" type="submit">Save</button>
+        <button id="closeEvaluator" type="button">Close</button>
+      </div>
+    </form>
+  </dialog>
   <script src="script.js"></script>
 </body>
 </html>

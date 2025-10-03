@@ -11,6 +11,12 @@ body{ margin:0; font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Se
 	--accent: #0b5fff;
 	--muted: #6b7280;
 	--border: #e5e7eb;
+
+	/* copy button (defaults for light theme) */
+	--copy-bg: #16a34a; /* green-600 */
+	--copy-border: #15803d; /* green-700 */
+	--copy-hover: #15803d;
+	--copy-contrast: #ffffff;
 }
 
 /* Theme variables (light by default) */
@@ -28,6 +34,12 @@ html[data-theme='dark']{
 	--muted: #9aa6b2;
 	--accent: #79a7ff;
 	--border: rgba(255,255,255,0.06);
+
+	/* darker greens for dark theme */
+	--copy-bg: #0f5130; /* darker green */
+	--copy-border: #0d3f24;
+	--copy-hover: #0d3f24;
+	--copy-contrast: #ffffff;
 }
 
 /* Sidebar-specific overrides for dark mode to improve contrast per user request */
@@ -105,6 +117,11 @@ html[data-theme='dark'] .sidebar .project-link.active{
 
 /* title row & theme toggle */
 .title-row{ display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+.title-controls{ display:flex; align-items:center; gap:0.5rem; }
+.account-btn{ background:transparent; border: none; cursor:pointer; font-size:1.125rem; padding:0.375rem; border-radius:0.375rem; color:var(--text); }
+.account-btn:focus{ outline: 0.1875rem solid rgba(11,95,255,0.12); }
+.account-btn svg{ width:1.125rem; height:1.125rem; display:block; }
+.account-btn:hover, .account-btn:focus{ background: rgba(11,95,255,0.06); color:var(--accent); }
 .theme-toggle{ background:transparent; border: none; cursor:pointer; font-size:1.125rem; padding:0.375rem; border-radius:0.375rem; color:var(--text); }
 .theme-toggle:focus{ outline: 0.1875rem solid rgba(11,95,255,0.12); }
 
@@ -129,6 +146,12 @@ html[data-theme='dark'] .sidebar .project-link.active{
 /* toast */
 .toast{ position:fixed; right:1rem; bottom:1rem; background:var(--panel); color:var(--text); padding:0.5rem 0.75rem; border-radius:0.375rem; opacity:0; transform:translateY(1rem); transition:opacity 200ms ease, transform 200ms ease, background-color var(--transition), color var(--transition); z-index:200; border:0.0625rem solid var(--border); box-shadow: 0 0.25rem 0.5rem rgba(0,0,0,0.12); }
 .toast.show{ opacity:1; transform:translateY(0); }
+
+/* account dialog */
+.account-dialog::backdrop{ background: rgba(0,0,0,0.4); }
+.account-dialog{ border-radius:0.5rem; padding:1rem; border:0.0625rem solid var(--border); background:var(--panel); color:var(--text); max-width:28rem; width:90%; }
+.account-dialog h3{ margin-top:0; }
+.account-dialog .field input[type="text"]{ width:100%; padding:0.5rem; border-radius:0.375rem; border:0.0625rem solid var(--border); background:var(--bg); color:var(--text); }
 
 /* responses */
 .template-upload-controls{ display:flex; gap:0.5rem; align-items:center; margin-bottom:1rem; }
@@ -158,6 +181,21 @@ html[data-theme='dark'] .sidebar .project-link.active{
 .template-controls{ display:flex; gap:0.5rem; margin-bottom:0.75rem; }
 .template-list-wrap{ max-height:220px; overflow:auto; margin-bottom:0.75rem; }
 .template-form textarea{ width:100%; }
+
+/* Blanks editor styles */
+.blanks-editor .blanks-controls{ display:flex; flex-direction:column; gap:0.5rem; max-width:28rem; }
+.blanks-editor select{ padding:0.5rem; border-radius:0.375rem; border:0.0625rem solid var(--border); background:var(--bg); color:var(--text); }
+.blanks-preview{ margin-top:0.75rem; }
+.blanks-preview .eval-generated{ min-height:3.5rem; white-space:pre-wrap; }
+
+/* Inline preview header: label and icon on the same row */
+.preview-header{ display:flex; align-items:center; justify-content:space-between; gap:0.5rem; margin-bottom:0.5rem; }
+.preview-header label{ font-size:1.25rem; font-weight:600; color:var(--text); margin:0; }
+.icon-btn{ position:relative; display:inline-flex; align-items:center; justify-content:center; background:var(--copy-bg); border:0.0625rem solid var(--copy-border); padding:0.5rem 1rem; padding-left:2.5rem; min-width:9rem; min-height:2.25rem; border-radius:0.375rem; cursor:pointer; color:var(--copy-contrast); }
+.icon-btn svg{ position:absolute; left:0.6rem; top:50%; transform:translateY(-50%); width:1.25rem; height:1.25rem; color:inherit; }
+.icon-btn .icon-label{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); font-size:0.85rem; font-weight:700; color:inherit; }
+.icon-btn:hover{ background:var(--copy-hover); border-color:var(--copy-border); color:var(--copy-contrast); }
+.icon-btn:focus{ outline: 0.1875rem solid rgba(16,128,0,0.18); }
 
 /* responsive behavior: show sidebar always on wider screens */
 @media (min-width: 60rem){
