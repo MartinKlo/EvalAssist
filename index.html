@@ -7,9 +7,123 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main>
-      <!-- Insert page contents here -->
+  <!-- Hamburger toggle button -->
+  <button id="menuToggle" class="hamburger" aria-controls="sidebar" aria-expanded="false" aria-label="Open menu">
+    <span class="bar" aria-hidden="true"></span>
+    <span class="bar" aria-hidden="true"></span>
+    <span class="bar" aria-hidden="true"></span>
+  </button>
+
+  <!-- Collapsible sidebar -->
+  <aside id="sidebar" class="sidebar" aria-hidden="true">
+    <nav aria-label="Projects">
+      <h2 class="visually-hidden">Projects</h2>
+
+      <section class="group">
+        <h3 class="group-title">Part 1 - EXCEL</h3>
+        <ul class="project-list">
+          <li><a href="#" class="project-link">YOUTUBE (M2)</a></li>
+          <li><a href="#" class="project-link">BART (M3)</a></li>
+          <li><a href="#" class="project-link">DOORDASH (M4)</a></li>
+          <li><a href="#" class="project-link">WINTER SPORTS (M5)</a></li>
+          <li><a href="#" class="project-link">MARKETING (M6)</a></li>
+          <li><a href="#" class="project-link">ASICS (M8)</a></li>
+          <li><a href="#" class="project-link">WARBY PARKER (LU)</a></li>
+        </ul>
+      </section>
+
+      <section class="group">
+        <h3 class="group-title">Part 2 - TABLEAU</h3>
+        <ul class="project-list">
+          <li><a href="#" class="project-link">UNESCO (M2)</a></li>
+          <li><a href="#" class="project-link">HOLLYWOOD (M3)</a></li>
+          <li><a href="#" class="project-link">STORYTELLING (M4)</a></li>
+          <li><a href="#" class="project-link">UFO (M5)</a></li>
+          <li><a href="#" class="project-link">SUPER BOWL (M6)</a></li>
+          <li><a href="#" class="project-link">NYC TAXI (M7)</a></li>
+          <li><a href="#" class="project-link">SPOTIFY (LU)</a></li>
+          <li><a href="#" class="project-link">PINEAPPLE (LU)</a></li>
+        </ul>
+      </section>
+    </nav>
+  </aside>
+
+  <!-- Overlay shown when sidebar is open -->
+  <div id="overlay" class="overlay" hidden></div>
+
+  <main id="main">
+    <div class="title-row">
+      <h1>Evaluation Assistant</h1> <!-- Treat this as a title for page-->
+      <button id="themeToggle" class="theme-toggle" aria-pressed="false" aria-label="Toggle dark mode">🌙</button>
+    </div>
+    <p>Select a project from the sidebar to start an evaluation.</p>
+    <div class="selected-project-row">
+      <h2 id="selectedProject">Selected project: None</h2>
+    </div>
+  <!-- Tabs: Evaluation / Template -->
+    <div class="tabs" id="tabs">
+      <div role="tablist" aria-label="Evaluation tabs" class="tablist">
+        <button role="tab" aria-selected="true" aria-controls="panel-eval" id="tab-eval" class="tab">Evaluation</button>
+  <button role="tab" aria-selected="false" aria-controls="panel-template" id="tab-template" class="tab">Template</button>
+      </div>
+
+      <section id="panel-eval" role="tabpanel" aria-labelledby="tab-eval" class="tabpanel">
+        <form id="evalForm">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required autocomplete="name" />
+          </div>
+
+          <div class="field">
+            <label for="quality">Quality</label>
+            <select id="quality" name="quality">
+              <option value="Superior">Superior</option>
+              <option value="Strong">Strong</option>
+              <option value="Needs Revision">Needs Revision</option>
+              <option value="Insufficient">Insufficient</option>
+            </select>
+          </div>
+
+          <!-- Evaluation sections will be rendered dynamically from project JSON -->
+          <div id="evalSections" class="feedback-sections"></div>
+
+
+          <div class="form-actions">
+            <button type="submit" id="saveBtn">Generate Feedback</button>
+            <button type="reset" id="resetBtn">Reset</button>
+          </div>
+          <div id="evalGenerated" class="eval-generated">No feedback generated yet.</div>
+        </form>
+      </section>
+
+      <section id="panel-template" role="tabpanel" aria-labelledby="tab-template" class="tabpanel" hidden>
+        <div class="template-upload-controls">
+          <label class="file-upload">
+            Upload feedback templates (JSON)
+            <input id="jsonUpload" type="file" accept=".json,application/json" />
+          </label>
+        </div>
+
+        <!-- Template editor displayed as an editable data table -->
+        <div class="template-editor" id="templateEditor">
+          <h3>Template editor (current project: <span id="editorProject">Global</span>)</h3>
+          <div class="template-controls">
+            <button id="exportTemplates">Export templates (JSON)</button>
+            <button id="clearTemplates">Clear templates for project</button>
+            <button id="resetDevMemory" title="Remove stored templates, include-states, and selected project from browser storage">Clear stored templates & project JSON</button>
+          </div>
+
+          <!-- Template include controls will be rendered dynamically from project JSON -->
+          <div id="templateIncludes" class="feedback-sections template-includes"></div>
+
+          <!-- Template list removed (editable key/template table removed as requested) -->
+        </div>
+      </section>
+    </div>
   </main>
+
   <script src="script.js"></script>
 </body>
 </html>
+
+<a href=""></a>

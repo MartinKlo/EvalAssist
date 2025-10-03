@@ -1,0 +1,234 @@
+{
+  "name": "ASICS (M8)",
+  "sections": [
+    {
+      "id": "general",
+      "title": "General",
+      "responses": [
+        {
+          "id": "g1",
+          "name": "Accuracy",
+          "include": true,
+          "options": {
+            "Accurate": "You were accurate in both setting up the data (upstream) and then working with that data through PivotTables/Formulas (downstream).",
+            "Downstream Errors": "The data is set up well, but the downstream work with PivotTables/Formulas was inaccurate. Ultimately these are small fixes and your foundational data work is solid.",
+            "Upstream Errors": "The PivotTable/Formula work is correct, but some of your foundational data work is inaccurate. Working with data is like a stream. Issues upstream cascade downwards and flow downstream. The good news is that this often means we are just one or two edits away from having everything click into place.",
+            "Inaccurate": "There were issues with both the data setup (Tasks 1-3) as well as some of the downstream analysis pieces. I recommend coming into Drop-Ins and we can review both aspects."
+          }
+        },
+        {
+          "id": "g2",
+          "name": "References",
+          "include": true,
+          "options": {
+            "Uses Table[Column]": "Want to shoutout the use of Table[Column] style references. This is a good professional habit because it prevents formula clutter and clearly communicates intent.",
+            "Uses A:A": "Wanted to highlight this. These references work, although they are more cluttered and less clear than using Table[Column] style references. You will never be docced for using this style of reference, but switching over provides a professional touch to your work.",
+            "No References": "Make sure to use references in your work. This helps to clarify the data source and dynamically update your work from the changes you make."
+          }
+        },
+        {
+          "id": "g3",
+          "name": "PivotTables",
+          "include": true,
+          "options": {
+            "Accurate, Complete": "PivotTables are looking great! They are correctly sourced, use the correct values/calculations, and have the correct organization. You have this down.",
+            "Some errors": "I noticed some minor errors through the PivotTables, but nothing that breaks them or is indicative of a larger issue. I recommend going through and revising the PivotTables to get it cleaned up.",
+            "Significant Issues": "There are some issues with the PivotTables that breaks them or causes errors in your analysis. I recommend going back and checking the sourcing, the included values/formatting, and ",
+            "No Attempt": "Make sure to go back through and work on using PivotTables. It is not only one of the greatest strengths of Excel, but also is a quick and professional way to interact with data."
+          }
+        }
+      ]
+    },
+    {
+      "id": "p1",
+  "title": "Part 1: Data Preparation & Initial Analysis",
+      "responses": [
+        {
+          "id": "p1r1",
+          "name": "Task 1-3: XLOOKUP",
+          "include": true,
+          "options": {
+            "Perfect": "The XLOOKUP formulas are perfect. This successfully sets up your later analysis and demonstrates proficiency with the formula.",
+            "Switched Parameters": "Some of the values are switched around in the formula. Easiest way to remember which data connects to which part is =XLOOKUP(\"Search Term in same table\", \"Search Column in other table\", \"Desired Output Column in other table\").",
+            "Wrong Data": "The data used for the XLOOKUPs do not match the requirements for the tasks. It can get easy to lose track when working on problems, and with XLOOKUP I recommend writing down (a) the data you are aiming to pull in and the data that matches between the two tables. From here it's just a matter of \"Search Value\", \"Search Area (Data matches Search Value)\", and \"Return Area (Our goal data)\". In other words we can take a UserID, search through a list of UserIDs in another table, and then pull the Country belonging to that user from that other table."
+          }
+        },
+        {
+          "id": "p1r2",
+          "name": "Task 4-5: PivotTable, Average Spent",
+          "include": true,
+          "options": {
+            "Accurate": "The PivotTable for Task 4 is perfect!",
+            "Field Placement Error": "NEED FEEDBACK",
+            "Values or Fields Misused": "Make sure to split the PivotTable up into countries and referral/non-referral users. This will get you the data for each country's performance to complete Task 5."
+          }
+        },
+        {
+          "id": "p1r3",
+          "name": "Task 6: Prediction & Analysis",
+          "include": true,
+          "options": {
+            "Thorough": "You provided excellent considerations for customer behaviour! You demonstrate clear subject expertise, and I recommend leveraging this as one of your key strengths.",
+            "Adequate": "You provided thoughtful considerations for customer behaviour. Understanding the causes of patterns we see in the data is a valuable asset.",
+            "Limited": "Make sure to take some more time to work through this. Comparing our expectations to the data is a great way to either challenge our assumptions or to see if there might be a problem in our data. It's a simple exercise, but has a big return on investment.",
+            "No Prediction": "Make sure to work through this when you get a chance. Comparing our expectations to the data is a great way to either challenge our assumptions or to see if there might be a problem in our data. It's a simple exercise, but has a big return on investment."
+          }
+        }
+      ]
+    },
+    {
+      "id": "p2",
+      "title": "Part 2: Summarizing Campaign Performance",
+      "responses": [
+        {
+          "id": "p2r1",
+          "name": "Task 8-9: PivotTable, Revenue",
+          "include": true,
+          "options": {
+            "Perfect": "Orders table is perfect!",
+            "Field Error": "The orders PivotTable uses the wrong fields, which affects the responses for Tasks 9a and 9b. The table should have the referral/non-referral orders on the rows, and the count of orders + Sum of money spent in the columns.",
+            "Source Error": "Looks like there was an issue with the sourcing for the PivotTable. My recommendation is to select a cell from the dataset and then create the PivotTable from there. This is the most reliable way to get that source set up."
+          }
+        },
+        {
+          "id": "p2r2",
+          "name": "Task 10-12: PivotTable, Referral Cost, and Avg Purchases",
+          "include": true,
+          "options": {
+            "Perfect": "Everything from the PivotTable to the formula work is spot-on.",
+            "Formula Errors": "The PivotTable is perfect, but there are some issues with the formulas. Task 11 should multiply the number of referral users times 10, and Tasks 12a and 12b should divide the number of orders by the number of users for each type (referral/non-referral).",
+            "PivotTable Errors": "The formulas are correct, but there are some issues with the PivotTable. Since this is upstream of the formulas, problems here will trickle down to the others (and can be the cause of a lot of frustration). I would look back over what fields you have included in your PivotTable, and check the sourcing if you can't find the pieces that you need."
+          }
+        }
+      ]
+    },
+    {
+      "id": "p3",
+      "title": "Part 3: Evaluating Success",
+      "responses": [
+        {
+          "id": "p3r1",
+          "name": "Analysis Quality",
+          "include": true,
+          "options": {
+            "Thorough & Insightful": "Fantastic responses! This is a thorough and insightful analysis on the success of the program. This kind of retroactive success analysis is common in both the public and private world, and building your background here has a good return on investment.",
+            "Adequate": "These are good responses that can be further strengthened and refined. These retroactive success analyses are common in both the public and private world, and building your background here has a good return on investment.",
+            "Limited": "These responses brought up good points, but didn't build up to unified arguments. I recommend revising the analysis by checking to see if your evidence (the measures you generated throughout the milestone) are used effectively to evaluate the success of the program. These retroactive analyses are common in both the public and private world, and building your background here has a good return on investment.",
+            "Insufficient": "NEED FEEDBACK"
+          }
+        },
+        {
+          "id": "p3r2",
+          "name": "Response Length",
+          "include": true,
+          "options": {
+            "Detailed": "The responses were well-detailed and did a good job of covering each piece. Great work and keep it up!",
+            "Concise": "The responses were concise, but covered all the necessary aspects. There is room for expansion, but this is more about taking it to the next level.",
+            "Insufficient": "These responses need to be expanded. There's a lot to discuss about the program from the stats that were generated, and the person that you report to is going to need to understand why it is or isn't a success."
+          }
+        },
+        {
+          "id": "p3r3",
+          "name": "AI Synthesis",
+          "include": true,
+          "options": {
+            "Synthesized": "Great job synthesising your thoughts with the ChatGPT response. Generative AI is a tool, and it's what you add and interpret that brings the value. Keep it up!",
+            "Unused": "I understand being wary about using generative AI or wanting to just do it yourself, but it is important to use it here so you build the experience and understanding of how it works. Even if you do not use it in the future, understanding how it works and interacts with input will be valuable.",
+            "Pasted Output": "Make sure to synthesize Generative AI output with your own writing and thoughts. Generative AI is a tool, and it's what you add and interpret that brings the value."
+          }
+        },
+        {
+          "id": "p3r4",
+          "name": "Task 13: Character of Success",
+          "include": true,
+          "options": {
+            "Clear & Accurate": "Great evaluation of the success of the program! You had a clear stance, were thorough with your reasoning, and did a great job incorporating our work from throughout the milestone.",
+            "Minor Inaccuracies": "NEED FEEDBACK",
+            "Vague or Indecisive": "When making an evaluation of the success of a program, I recommend taking a clear stance up front and then supporting it afterwards.",
+            "Insufficient": "NEED FEEDBACK"
+          }
+        },
+        {
+          "id": "p3r5",
+          "name": "Task 14: ChatGPT Suggestion",
+          "include": true,
+          "options": {
+            "Integrated & Analysed": "You did a great job combining the feedback from ChatGPT with your own insights!",
+            "Acknowledged, Minimal Integration": "You acknowledged the suggestions that ChatGPT made, but there was some room for expanding that synthesis. If you feel like the suggestions that you get from ChatGPT are not helpful, try experimenting with the prompting and see what happens.",
+            "Copy/Paste": "It's good that you used ChatGPT to think of additional data or analyses, but make sure to modify it so that it isn't just the output. Generative AI is a tool, and it's what you add and interpret that brings the value."
+          }
+        },
+        {
+          "id": "p3r6",
+          "name": "Task 15: Additional Information",
+          "include": true,
+          "options": {
+            "Insightful": "Great insight to cap off the main section of the milestone.",
+            "Adequate": "This is a good insight. There's room to expand or strengthen the idea, but this is also the second question about the topic. You're in a good spot.",
+            "Limited": "Good direction - just needs some additional support and analysis.",
+            "Irrelevant": "NEED FEEDBACK"
+          }
+        }
+      ]
+    },
+    {
+      "id": "lu",
+      "title": "LevelUp:",
+      "responses": [
+        {
+          "id": "lur1",
+          "name": "PivotTable",
+          "include": true,
+          "options": {
+            "Correct": "PivotTable is perfect.",
+            "Field Error": "There are some issues with the fields used in this analysis. Make sure to use the country in the column, the referral status in the rows, and the sum of revenue in the values.",
+            "Source Error": "The issue with the PivotTable comes back to an error in the sourcing. Make sure that the PivotTable has full access to the dataset, and don't be afraid to recreate the table if it's not working. If it's a recurring problem, then we can walk through some best practices in Drop-Ins."
+          }
+        },
+        {
+          "id": "lur2",
+          "name": "Interpretation",
+          "include": true,
+          "options": {
+            "Clear & Insightful": "You did a fantastic job analyzing three differences between countries!",
+            "Adequate": "You hit the three observations from the PivotTable, but there's room to strengthen your points.",
+            "Limited": "Make sure to hit three points with observations straight from the PivotTable."
+          }
+        }
+      ]
+    }
+  ]
+  ,
+  "messages": {
+    "greeting": {
+      "Superior": "This is a superior submission",
+      "Strong": "This is a strong submission",
+      "Needs Revision": "This is good submission that needs revision",
+      "Insufficient": "This milestone has good pieces to build on"
+    },
+    "intro": {
+      "Superior": "Your work demonstrates professionalism, attention to detail, and full-effort throughout. Work like this will set you up as a reliable contributor and foundational team member.",
+      "Strong": "Your work is accurate and demonstrates good effort. I recommend implementing the feedback when refining your milestone.",
+      "Needs Revision": "Revising your milestone will help you break down the road blocks you encountered, set you up for success with the portfolio project, and prepare this milestone for public sharing. If you spent a lot of time on this milestone and feel frustrated, taking some time away can let you process the problems in the background and reset your perspective.",
+      "Insufficient": "I can tell that this milestone was a challenge - either because something with the material didn't click or because you didn't have enough time to process. That's okay and happens to everyone. There's good work to build on here, and I have included detailed feedback to help you revise your submission. Revising your milestone will help you break down the road blocks you encountered, set you up for success with the portfolio project, and prepare this milestone for public sharing. If you spent a lot of time on this milestone and feel frustrated, taking some time away can let you process the problems in the background and reset your perspective."
+    },
+    "overview": {
+      "Superior": "Here is your detailed feedback:",
+      "Strong": "Here is your detailed feedback:",
+      "Needs Revision": "Here is your detailed feedback:",
+      "Insufficient": "Here is your detailed feedback:"
+    },
+    "conclusion": {
+      "Superior": "Keep up this quality of work. Not only is it a great reflection on you, but it is also motivating to evaluate. I look forward to seeing you in LL, evaluating your portfolio project, and tackling Tableau.",
+      "Strong": "There is a lot to be proud of, and I recommend using this feedback to take your project to the next level. I look forward to seeing you in LL, evaluating your portfolio project, and tackling Tableau.",
+      "Needs Revision": "There is a lot to be proud of, and if you have any questions then make sure to reach out. I look forward to seeing you in LiveLab and evaluating your portfolio project!",
+      "Insufficient": "There is a lot to be proud of, and if you have any questions then make sure to reach out. If you get stuck on anything, make sure to use the skillbuilders, materials, drop-ins, and Bodhi your advantage. You got this!"
+    },
+    "signoff": {
+      "Superior": "Take care",
+      "Strong": "Take care",
+      "Needs Revision": "Take care",
+      "Insufficient": "Take care"
+    }
+  }
+}
