@@ -39,6 +39,14 @@ sidebar.addEventListener('click', (e) => {
 		// persist selection
 		try{ localStorage.setItem(SELECTED_PROJECT_KEY, projectName); }catch(e){}
 		setSidebarOpen(false);
+		// attempt to load the project's template JSON from the Templates/ folder
+		try{ loadProjectTemplate(projectName).then(()=>{
+			renderTemplateEditor();
+			populateResponseSelects();
+			applySavedIncludeStatesForProject(projectName);
+			renderSectionsForProject(projectName);
+			updatePreview();
+		}).catch(()=>{}); }catch(e){}
 	}
 });
 
@@ -264,8 +272,9 @@ function renderSectionsForProject(proj){
 
 	pj.sections.forEach((sec, sIndex) => {
 		// Evaluation panel details
-		const dEval = document.createElement('details');
-		if(sIndex === 0) dEval.open = true;
+	const dEval = document.createElement('details');
+	// Open collapsible sections by default
+	dEval.open = true;
 		const s = document.createElement('summary'); s.textContent = sec.title;
 		dEval.appendChild(s);
 		const rows = document.createElement('div'); rows.className = 'section-rows';
@@ -566,6 +575,21 @@ async function fetchTemplatesFolder(){
 			}
 		}catch(err){ /* ignore fetch/parse errors */ }
 	}));
+}
+
+// Load a specific project's JSON from the Templates/ folder (if present)
+async function loadProjectTemplate(projectName){
+	const filename = 'Templates/' + projectName.replace(/\s+/g,'-') + '.json';
+	try{
+		const resp = await fetch(filename, { cache: 'no-store' });
+		if(!resp.ok) return;
+		const parsed = await resp.json();
+		projectJsons[projectName] = parsed;
+		templatesMem[projectName] = templatesMem[projectName] || {};
+		if(parsed && !Array.isArray(parsed) && parsed.sections == null){
+			Object.keys(parsed).forEach(k => { templatesMem[projectName][k] = parsed[k]; });
+		}
+	}catch(err){ /* ignore */ }
 }
 
 // Fetch templates from Templates/ then render UI

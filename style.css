@@ -141,6 +141,10 @@ html[data-theme='dark'] .sidebar .project-link.active{
 .form-actions{ display:flex; gap:0.5rem; margin-top:1rem; }
 .form-actions button{ padding:0.5rem 0.75rem; border-radius:0.375rem; border:0.0625rem solid var(--border); background:var(--panel); color:var(--text); cursor:pointer; }
 
+/* Ensure icon-btn inside form-actions (like #saveBtn) uses the copy button styling */
+.form-actions .icon-btn{ background:var(--copy-bg); border-color:var(--copy-border); color:var(--copy-contrast); }
+.form-actions .icon-btn:hover{ background:var(--copy-hover); border-color:var(--copy-border); color:var(--copy-contrast); }
+
 .eval-generated{ margin-top:1rem; padding:0.75rem; border-radius:0.375rem; background:var(--panel); border:0.0625rem solid var(--border); color:var(--text); min-height:3.25rem; white-space: pre-wrap; }
 
 /* toast */
