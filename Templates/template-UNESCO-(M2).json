@@ -90,7 +90,9 @@
           "include": true,
           "options": {
             "Perfect": "",
-            "Difficult Comparison": "Here it looks like the side-by-side comparison didn't pull through. To make comparisons easy: aim to get the bars lined up with each other. If you want a vertical bar chart, then put the comparison to the side. If you want a horizontal bar chart, then put the comparison above or below."
+            "Difficult Comparison": "Here it looks like the side-by-side comparison didn't pull through. To make comparisons easy: aim to get the bars lined up with each other. If you want a vertical bar chart, then put the comparison to the side. If you want a horizontal bar chart, then put the comparison above or below.",
+            "No Comparison": "This chart should have a side-by-side comparison of endangered vs non-endangered sites. This way the reader can easily compare the values across each category.",
+            "Wrong Fields": "Make sure that you have Category and Danger List in Columns and Count of World Heritage Sites in Rows."
           }
         },
         {
@@ -142,7 +144,7 @@
           "include": true,
           "options": {
             "Completed": "Logarithmic scale is completely setup. Fantastic cap to the milestone!",
-            "Insufficient": ""
+            "Insufficient": "To create the logarithmic scale, right click on the axis and select 'Edit Axis'. Then check the box for 'Logarithmic Scale'."
           }
         }
       ]
