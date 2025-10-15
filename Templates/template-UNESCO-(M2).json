@@ -78,8 +78,9 @@
           "include": true,
           "options": {
             "Perfect": "You have the fields in the right place to create the stacked horizontal bar chart. Great work!",
-            "No Color": "",
-            "Missing Fields": ""
+            "No Color": "Make sure to add color to the 'Danger List' field on the marks card.",
+            "Not Stacked": "This chart should be a stacked bar chart. Make sure to put the 'Danger List' field in colors on the marks card.",
+            "Missing Fields": "This chart is missing some fields. Make sure to have the Count of World Heritage Sites in Columns, Category in Rows, and Danger List in Colors on the marks card."
           }
         },
         {
