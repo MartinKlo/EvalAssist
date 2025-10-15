@@ -26,7 +26,8 @@
           "name": "Sites by Type",
           "include": true,
           "options": {
-            "Accurate": "This section is accurate. Great job getting the count of each category!"
+            "Accurate": "This section is accurate. Great job getting the count of each category!",
+            "Inaccurate": "The counts for each category should be: Cultural (869), Natural (213), and Mixed (39)."
           }
         },
         {
