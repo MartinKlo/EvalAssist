@@ -549,8 +549,13 @@ applySavedIncludeStatesForProject(getCurrentProjectName());
 async function fetchTemplatesFolder(){
 	const links = Array.from(sidebar.querySelectorAll('.project-link'));
 	const names = links.map(a => a.textContent.trim());
-	// also include a couple of common filenames if present
-	const candidates = names.map(n => 'Templates/' + n.replace(/\s+/g,'-') + '.json');
+	// include both plain and `template-` prefixed filenames for each project name
+	const candidates = [];
+	names.forEach(n => {
+		const slug = n.replace(/\s+/g,'-');
+		candidates.push('Templates/' + slug + '.json');
+		candidates.push('Templates/template-' + slug + '.json');
+	});
 	// Also include known file present in repository as a fallback
 	candidates.push('Templates/template-ASICS-(M8).json');
 
@@ -579,17 +584,26 @@ async function fetchTemplatesFolder(){
 
 // Load a specific project's JSON from the Templates/ folder (if present)
 async function loadProjectTemplate(projectName){
-	const filename = 'Templates/' + projectName.replace(/\s+/g,'-') + '.json';
-	try{
-		const resp = await fetch(filename, { cache: 'no-store' });
-		if(!resp.ok) return;
-		const parsed = await resp.json();
-		projectJsons[projectName] = parsed;
-		templatesMem[projectName] = templatesMem[projectName] || {};
-		if(parsed && !Array.isArray(parsed) && parsed.sections == null){
-			Object.keys(parsed).forEach(k => { templatesMem[projectName][k] = parsed[k]; });
-		}
-	}catch(err){ /* ignore */ }
+	const slug = projectName.replace(/\s+/g,'-');
+	const tryFiles = [
+		'Templates/' + slug + '.json',
+		'Templates/template-' + slug + '.json'
+	];
+	for(const filename of tryFiles){
+		try{
+			const resp = await fetch(filename, { cache: 'no-store' });
+			if(!resp.ok) continue;
+			const parsed = await resp.json();
+			// map to project
+			projectJsons[projectName] = parsed;
+			templatesMem[projectName] = templatesMem[projectName] || {};
+			if(parsed && !Array.isArray(parsed) && parsed.sections == null){
+				Object.keys(parsed).forEach(k => { templatesMem[projectName][k] = parsed[k]; });
+			}
+			// stop after successfully loading one file
+			return;
+		}catch(err){ /* ignore and try next filename */ }
+	}
 }
 
 // Fetch templates from Templates/ then render UI

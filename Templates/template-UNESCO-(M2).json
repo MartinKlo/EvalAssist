@@ -1,0 +1,198 @@
+{
+  "name": "UNESCO (M2)",
+  "sections": [
+    {
+      "id": "general",
+      "title": "General",
+      "responses": [
+        {
+          "id": "g1",
+          "name": "Accuracy",
+          "include": true,
+          "options": {
+            "Accurate": "All the charts were accurate!",
+            "Doing Too Much": "Make sure that you are still hitting the essentials, and carefully evaluating decisions around introducing additional elements (such as color).",
+            "Inaccurate": "Some of the charts were inaccurate to what was expected from the instructions. Make sure to pick out essential pieces of the prompts and refer to the example visualizations to guide your process."
+          }
+        }
+      ]
+    },
+    {
+      "id": "free_response",
+      "title": "Free-Response",
+      "responses": [
+        {
+          "id": "fr1",
+          "name": "Sites by Type",
+          "include": true,
+          "options": {
+            "Accurate": "This section is accurate. Great job getting the count of each category!"
+          }
+        },
+        {
+          "id": "fr2",
+          "name": "Danger Factors",
+          "include": true,
+          "options": {
+            "Thorough and Insightful": "Not only are these great factors on their own, but you did an excellent job connecting them for the reader. Keep this up!",
+            "Concise": "These are good factors, but make sure that you expand on these to your reader.",
+            "Insufficient": ""
+          }
+        },
+        {
+          "id": "fr3",
+          "name": "Heritage Sites",
+          "include": true,
+          "options": {
+            "Accurate": "Got the list for number of heritage sites down perfectly.",
+            "Inaccurate": "The list of countries with the largest number of heritage sites should be China, Italy, Spain, France, and Germany."
+          }
+        },
+        {
+          "id": "fr4",
+          "name": "Largest Area",
+          "include": true,
+          "options": {
+            "Accurate": "List of countries with the largest physical area is perfect.",
+            "Inaccurate": "The largest countries by area should be France, Australia, Kiribati, The United States, and Russia."
+          }
+        }
+      ]
+    },
+    {
+      "id": "charts",
+      "title": "Charts",
+      "responses": [
+        {
+          "id": "c1",
+          "name": "SitesPerCategory",
+          "include": true,
+          "options": {
+            "Perfect": "You have the data split up into categories. Looking good."
+          }
+        },
+        {
+          "id": "c2",
+          "name": "Stacked-EndangeredSites",
+          "include": true,
+          "options": {
+            "Perfect": "You have the fields in the right place to create the stacked horizontal bar chart. Great work!",
+            "No Color": "",
+            "Missing Fields": ""
+          }
+        },
+        {
+          "id": "c3",
+          "name": "Side-EndangeredSites",
+          "include": true,
+          "options": {
+            "Perfect": "",
+            "Difficult Comparison": "Here it looks like the side-by-side comparison didn't pull through. To make comparisons easy: aim to get the bars lined up with each other. If you want a vertical bar chart, then put the comparison to the side. If you want a horizontal bar chart, then put the comparison above or below."
+          }
+        },
+        {
+          "id": "c4",
+          "name": "HeritageSites",
+          "include": true,
+          "options": {
+            "Perfect": "You have the count down and created a perfect chart."
+          }
+        },
+        {
+          "id": "c5",
+          "name": "HeritageArea",
+          "include": true,
+          "options": {
+            "Perfect": "Heritage Area per Country looks perfect!"
+          }
+        }
+      ]
+    },
+    {
+      "id": "levelup",
+      "title": "LevelUp",
+      "responses": [
+        {
+          "id": "lu1",
+          "name": "Attempted",
+          "include": true,
+          "options": {
+            "Yes": "Good call trying out this LevelUp. This one further develops your experience with PivotTables and using data to create insights.",
+            "No": "I will always recommend trying out the LevelUp. Not only is it a good way to get some extra cushion on the evaluations, but you also get further opportunities to develop your skills. This one specifically further develops your experience with PivotTables and using data to create insights."
+          }
+        },
+        {
+          "id": "lu2",
+          "name": "Foundation",
+          "include": true,
+          "options": {
+            "Perfect": "Chart foundation is perfect.",
+            "Needs Color": "The chart before the logarithmic scale needs color added.",
+            "Missing Fields": "The chart for the LevelUp is missing a few fields. It should include the Sum of Area Hectares in Columns, Names in Rows, Country in filters set to France, attributes in marks as a tooltip, and Category in the colors."
+          }
+        },
+        {
+          "id": "lu3",
+          "name": "Logarithmic Scale",
+          "include": true,
+          "options": {
+            "Completed": "Logarithmic scale is completely setup. Fantastic cap to the milestone!",
+            "Insufficient": ""
+          }
+        },
+        {
+          "id": "lu4",
+          "name": "PivotTable",
+          "include": true,
+          "options": {
+            "Correct": "PivotTable is perfect.",
+            "Field Error": "There are some issues with the fields used in this analysis. Make sure to use the country in the column, the referral status in the rows, and the sum of revenue in the values.",
+            "Source Error": "The issue with the PivotTable comes back to an error in the sourcing. Make sure that the PivotTable has full access to the dataset, and don't be afraid to recreate the table if it's not working. If it's a recurring problem, then we can walk through some best practices in Drop-Ins."
+          }
+        },
+        {
+          "id": "lu5",
+          "name": "Interpretation",
+          "include": true,
+          "options": {
+            "Clear & Insightful": "You did a fantastic job analyzing three differences between countries!",
+            "Adequate": "You hit the three observations from the PivotTable, but there's room to strengthen your points.",
+            "Limited": "Make sure to hit three points with observations straight from the PivotTable."
+          }
+        }
+      ]
+    }
+  ],
+  "messages": {
+    "greeting": {
+      "Superior": "This is a superior submission",
+      "Strong": "This is a strong submission",
+      "Needs Revision": "This is good submission that needs revision",
+      "Insufficient": "This milestone has good pieces to build on"
+    },
+    "intro": {
+      "Superior": "Your work demonstrates professionalism, attention to detail, and full-effort throughout. Work like this will set you up as a reliable contributor and foundational team member.",
+      "Strong": "Your work is accurate and demonstrates good effort. I recommend implementing the feedback when refining your milestone.",
+      "Needs Revision": "Revising your milestone will help you break down the road blocks you encountered, set you up for success with the portfolio project, and prepare this milestone for public sharing. If you spent a lot of time on this milestone and feel frustrated, taking some time away can let you process the problems in the background and reset your perspective.",
+      "Insufficient": "I can tell that this milestone was a challenge - either because something with the material didn't click or because you didn't have enough time to process. That's okay and happens to everyone. There's good work to build on here, and I have included detailed feedback to help you revise your submission. Revising your milestone will help you break down the road blocks you encountered, set you up for success with the portfolio project, and prepare this milestone for public sharing. If you spent a lot of time on this milestone and feel frustrated, taking some time away can let you process the problems in the background and reset your perspective."
+    },
+    "overview": {
+      "Superior": "Here is your detailed feedback:",
+      "Strong": "Here is your detailed feedback:",
+      "Needs Revision": "Here is your detailed feedback:",
+      "Insufficient": "Here is your detailed feedback:"
+    },
+    "conclusion": {
+      "Superior": "This is a great start to Tableau, and I look forward to seeing how you develop your data visualizations from here.",
+      "Strong": "This is a great start to Tableau, and I look forward to seeing how you develop your data visualizations from here.",
+      "Needs Revision": "There is a lot to be proud of, and if you have any questions then make sure to reach out. I look forward to seeing your development as a data visualizer!",
+      "Insufficient": "There is a lot to be proud of, and if you have any questions then make sure to reach out. If you get stuck on anything, make sure to use the skillbuilders, materials, drop-ins, and Bodhi your advantage. You got this!"
+    },
+    "signoff": {
+      "Superior": "Take care",
+      "Strong": "Take care",
+      "Needs Revision": "Take care",
+      "Insufficient": "Take care"
+    }
+  }
+}
