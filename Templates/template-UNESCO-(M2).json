@@ -96,7 +96,8 @@
           "name": "HeritageSites",
           "include": true,
           "options": {
-            "Perfect": "You have the count down and created a perfect chart."
+            "Perfect": "You have the count down and created a perfect chart.",
+            "Vertical Bars": "This chart should be horizontal bars to match the example. This is a best practice for long labels because it makes it easier to read."
           }
         },
         {
@@ -104,7 +105,8 @@
           "name": "HeritageArea",
           "include": true,
           "options": {
-            "Perfect": "Heritage Area per Country looks perfect!"
+            "Perfect": "Heritage Area per Country looks perfect!",
+            "Vertical Bars": "This chart should have horizontal bars. This way the country labels are easier to read with the chart."
           }
         }
       ]
