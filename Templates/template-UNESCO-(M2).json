@@ -69,7 +69,8 @@
           "name": "SitesPerCategory",
           "include": true,
           "options": {
-            "Perfect": "You have the data split up into categories. Looking good."
+            "Perfect": "You have the data split up into categories. Looking good.",
+            "Wrong Fields": "Make sure you have the Category in Columns and count of World Heritage Sites in Rows."
           }
         },
         {
