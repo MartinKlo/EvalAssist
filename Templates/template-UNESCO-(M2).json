@@ -117,8 +117,8 @@
           "name": "Attempted",
           "include": true,
           "options": {
-            "Yes": "Good call trying out this LevelUp. This one further develops your experience with PivotTables and using data to create insights.",
-            "No": "I will always recommend trying out the LevelUp. Not only is it a good way to get some extra cushion on the evaluations, but you also get further opportunities to develop your skills. This one specifically further develops your experience with PivotTables and using data to create insights."
+            "Yes": "Good call trying out this LevelUp. This one covers a niche topic, but it is a great way to get familiar early on.",
+            "No": "I will always recommend trying out the LevelUp. Not only is it a good way to get some extra cushion on the evaluations, but you also get further opportunities to develop your skills. This one specifically further develops your experience with customizing charts - something we dive into later on."
           }
         },
         {
@@ -138,26 +138,6 @@
           "options": {
             "Completed": "Logarithmic scale is completely setup. Fantastic cap to the milestone!",
             "Insufficient": ""
-          }
-        },
-        {
-          "id": "lu4",
-          "name": "PivotTable",
-          "include": true,
-          "options": {
-            "Correct": "PivotTable is perfect.",
-            "Field Error": "There are some issues with the fields used in this analysis. Make sure to use the country in the column, the referral status in the rows, and the sum of revenue in the values.",
-            "Source Error": "The issue with the PivotTable comes back to an error in the sourcing. Make sure that the PivotTable has full access to the dataset, and don't be afraid to recreate the table if it's not working. If it's a recurring problem, then we can walk through some best practices in Drop-Ins."
-          }
-        },
-        {
-          "id": "lu5",
-          "name": "Interpretation",
-          "include": true,
-          "options": {
-            "Clear & Insightful": "You did a fantastic job analyzing three differences between countries!",
-            "Adequate": "You hit the three observations from the PivotTable, but there's room to strengthen your points.",
-            "Limited": "Make sure to hit three points with observations straight from the PivotTable."
           }
         }
       ]
