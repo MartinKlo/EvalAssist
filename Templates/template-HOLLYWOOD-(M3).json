@@ -1,0 +1,178 @@
+{
+  "name": "HOLLYWOOD (M3)",
+  "sections": [
+    {
+      "id": "general",
+      "title": "General",
+      "responses": [
+        {
+          "id": "g1",
+          "name": "Accuracy",
+          "include": true,
+          "options": {
+            "Accurate": "All the charts were accurate!",
+            "Doing Too Much": "Make sure that you are still hitting the essentials, and carefully evaluating decisions around introducing additional elements (such as color).",
+            "Inaccurate": "Some of the charts were inaccurate to what was expected from the instructions. Make sure to pick out essential pieces of the prompts and refer to the example visualizations to guide your process."
+          }
+        }
+      ]
+    },
+    {
+      "id": "free_response",
+      "title": "Free-Response",
+      "responses": [
+        {
+          "id": "fr1",
+          "name": "Top 10 Actors",
+          "include": true,
+          "options": {
+            "Accurate": "This is accurate.",
+            "Inaccurate": "There are actually 10 men and no women in the top 10 highest paid."
+          }
+        },
+        {
+          "id": "fr2",
+          "name": "Top 3 - Factors",
+          "include": true,
+          "options": {
+            "Thorough and Insightful": "Great analysis of the factors influencing the earnings of the top 3.",
+            "Concise": "This has good factors that need to be expanded on. To take it a step further, you can use specific examples and or numbers.",
+            "Insufficient": "There should be more detail here. Needs to address both the reason actors have earned so much over time, as well as what sources those earnings might come from."
+          }
+        },
+        {
+          "id": "fr3",
+          "name": "Pay Gap Trend",
+          "include": true,
+          "options": {
+            "Accurate": "Correct.",
+            "Wrong Chart": "The Actor Earnings over Time chart should have the",
+            "Innacurate": ""
+          }
+        },
+        {
+          "id": "fr4",
+          "name": "LevelUp",
+          "include": true,
+          "options": {
+            "Accurate": "List of countries with the largest physical area is perfect.",
+            "Inaccurate": "The largest countries by area should be France, Australia, Kiribati, The United States, and Russia."
+          }
+        }
+      ]
+    },
+    {
+      "id": "charts",
+      "title": "Charts",
+      "responses": [
+        {
+          "id": "c1",
+          "name": "Yearly Actor Earnings",
+          "include": true,
+          "options": {
+            "Perfect": "You have the data split up into categories. Looking good.",
+            "Line Chart": "This chart should be a bar chart to match the graphic. The way to correct this is to set the Year to Discrete.",
+            "Filters": "The filters need revision. Gender should be set to male and female, the category should be restricted to actors and acresses, and the years should be limited to 2016 through 2020.",
+            "Field Error": "The Sum of Pay should be in columns and a discrete Year followed by Gender should be in rows."
+          }
+        },
+        {
+          "id": "c2",
+          "name": "Actor Earnings by Sex",
+          "include": true,
+          "options": {
+            "Perfect": "Good work. This is a simple but effective chart that can get a quick read on the overall situation.",
+            "Not Averaged": "Make sure to switch Pay to the Average to get an accurate read.",
+            "Field Error": "For this chart, Gender should be in either columns or rows, and the Average of the Pay should be in the other."
+          }
+        },
+        {
+          "id": "c3",
+          "name": "Highest Paid Actors",
+          "include": true,
+          "options": {
+            "Perfect": "This is exactly how it should look and visually drives home the point.",
+            "Filter Error": "",
+            "Field Error": "Make sure that you have Category and Danger List in Columns and Count of World Heritage Sites in Rows."
+          }
+        },
+        {
+          "id": "c4",
+          "name": "Earnings Over Time",
+          "include": true,
+          "options": {
+            "Perfect": "This is perfectly executed. This is one of my favourite charts from all of Part 2 because of how much there is to explore with this. I highly recommend going back and thinking about all the threads there are to pull.",
+            "Filter Error": "This chart has a filter error which makes it inaccurate. Missing the Gender filter does not change much, but the category filter can tell completely different stories depending on if it is activated. This is also a look at what other insights this dataset holds that are worth a second look.",
+            "Field Error": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "levelup",
+      "title": "LevelUp",
+      "responses": [
+        {
+          "id": "lu1",
+          "name": "Attempted",
+          "include": true,
+          "options": {
+            "Yes": "Respect is always due for attempting the LevelUp. This one is a more focused on the analysis, and brings forward some of those interesting threads sitting in the data.",
+            "No": "I will always recommend trying out the LevelUp. Not only is it a good way to get some extra cushion on the evaluations, but you also get further opportunities to develop your skills. This one is a more focused on the analysis, and brings forward some of those interesting threads sitting in the data."
+          }
+        },
+        {
+          "id": "lu2",
+          "name": "Foundation",
+          "include": false,
+          "options": {
+            "Perfect": "",
+            "Needs Color": "",
+            "Missing Fields": ""
+          }
+        },
+        {
+          "id": "lu3",
+          "name": "Empty",
+          "include": false,
+          "options": {
+            "Completed": "",
+            "Insufficient": ""
+          }
+        }
+      ]
+    }
+  ],
+  "messages": {
+    "greeting": {
+      "Superior": "This is a superior submission",
+      "Strong": "This is a strong submission",
+      "Needs Revision": "This is good submission that needs revision",
+      "Insufficient": "This milestone has good pieces to build on"
+    },
+    "intro": {
+      "Superior": "Your work demonstrates professionalism, attention to detail, and full-effort throughout. Work like this will set you up as a reliable contributor and foundational team member.",
+      "Strong": "Your work is accurate and demonstrates good effort. I recommend implementing the feedback when refining your milestone.",
+      "Needs Revision": "Revising your milestone will help you break down the road blocks you encountered, set you up for success with the portfolio project, and prepare this milestone for public sharing. If you spent a lot of time on this milestone and feel frustrated, taking some time away can let you process the problems in the background and reset your perspective.",
+      "Insufficient": "I can tell that this milestone was a challenge - either because something with the material didn't click or because you didn't have enough time to process. That's okay and happens to everyone. There's good work to build on here, and I have included detailed feedback to help you revise your submission. Revising your milestone will help you break down the road blocks you encountered, set you up for success with the portfolio project, and prepare this milestone for public sharing. If you spent a lot of time on this milestone and feel frustrated, taking some time away can let you process the problems in the background and reset your perspective."
+    },
+    "overview": {
+      "Superior": "Here is your detailed feedback:",
+      "Strong": "Here is your detailed feedback:",
+      "Needs Revision": "Here is your detailed feedback:",
+      "Insufficient": "Here is your detailed feedback:"
+    },
+    "conclusion": {
+      "Superior": "I look forward to seeing how you tackle the next one!",
+      "Strong": "I look forward to seeing how you tackle the next one!",
+      "Needs Revision": "There is a lot to be proud of, and if you have any questions then make sure to reach out. I look forward to seeing your continued development as a data visualizer!",
+      "Insufficient": "There is a lot to be proud of, and if you have any questions then make sure to reach out. If you get stuck on anything, make sure to use the skillbuilders, materials, drop-ins, and Bodhi your advantage. You got this!"
+    },
+    "signoff": {
+      "Superior": "Take care",
+      "Strong": "Take care",
+      "Needs Revision": "Take care",
+      "Insufficient": "Take care"
+    }
+  }
+}
