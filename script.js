@@ -315,6 +315,47 @@ function renderSectionsForProject(proj){
 	applySavedIncludeStatesForProject(proj);
 	// ensure include states applied to UI
 	applyIncludeStatesToEvalUI();
+
+	// --- LevelUp: make the "Attempted" response control inclusion of other LevelUp responses ---
+	function enforceLevelUpIncludesForProject(projectName){
+		// find all selects in the LevelUp section for the current UI
+		const levelupSelects = Array.from(document.querySelectorAll('.response-select[data-section="levelup"]'));
+		let attemptIndex = null;
+		let attemptVal = '';
+		levelupSelects.forEach(sel => {
+			const row = sel.closest('.response-row');
+			const labelEl = row ? row.querySelector('.response-label') : null;
+			const label = labelEl ? (labelEl.textContent || '').trim() : '';
+			const idx = sel.getAttribute('data-index');
+			if(/attempted/i.test(label)){
+				attemptIndex = idx;
+				attemptVal = sel.value || '';
+			}
+		});
+		// If attempted == 'Yes', include others; otherwise exclude others (also covers empty)
+		const includeOthers = (attemptVal === 'Yes');
+		// toggle include-checkboxes for levelup responses (excluding the Attempted one)
+		document.querySelectorAll('.template-includes .include-checkbox[data-section="levelup"]').forEach(chk => {
+			const idx = chk.getAttribute('data-index');
+			if(idx === attemptIndex) return; // skip Attempted checkbox itself
+			try{ chk.checked = !!includeOthers; }catch(e){}
+		});
+		// apply to UI and persist
+		applyIncludeStatesToEvalUI();
+	}
+
+	// attach change handlers to the Attempted select (if present) and enforce initial state
+	document.querySelectorAll('.response-select[data-section="levelup"]').forEach(sel => {
+		const row = sel.closest('.response-row');
+		const labelEl = row ? row.querySelector('.response-label') : null;
+		const label = labelEl ? (labelEl.textContent || '') : '';
+		if(/attempted/i.test(label)){
+			sel.addEventListener('change', () => enforceLevelUpIncludesForProject(proj));
+		}
+	});
+
+	// enforce on initial render
+	enforceLevelUpIncludesForProject(proj);
 }
 
 // Helper to import a project JSON (strict schema) and store in projectJsons (in-memory)

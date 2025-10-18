@@ -14,6 +14,14 @@
             "Doing Too Much": "Make sure that you are still hitting the essentials, and carefully evaluating decisions around introducing additional elements (such as color).",
             "Inaccurate": "Some of the charts were inaccurate to what was expected from the instructions. Make sure to pick out essential pieces of the prompts and refer to the example visualizations to guide your process."
           }
+        },
+        {
+          "id": "g2",
+          "name": "Late",
+          "include": true,
+          "options": {
+            "Late Verbage": "Make sure to give yourself enough time to get the milestone in on time. Alternatively, if you have a valid reason for being late, make sure to reach out to HelpHub to get the extension. I want to make sure you get full credit for the work that you do."
+          }
         }
       ]
     },
@@ -48,6 +56,16 @@
             "Accurate": "Correct.",
             "Wrong Chart": "Issues with the chart lead to inaccurate insights here. The Actor Earnings over Time chart should show the gap narrowing (and even temporarily inverting) before being re-established.",
             "Innacurate": "The Actor Earnings over Time chart should show the gap narrowing (and even temporarily inverting) before being re-established."
+          }
+        },
+        {
+          "id": "lu3",
+          "name": "Writing",
+          "include": true,
+          "options": {
+            "Accurate": "The LevelUp writing is perfect!",
+            "Concise": "The LevelUp section is good and can be strengthened with a note expanding on observations.",
+            "Inaccurate": "The LevelUp section is not accurate."
           }
         }
       ]
@@ -119,16 +137,6 @@
           "options": {
             "Perfect": "",
             "Missing Fields": ""
-          }
-        },
-        {
-          "id": "lu3",
-          "name": "Writing",
-          "include": true,
-          "options": {
-            "Accurate": "The LevelUp writing is perfect!",
-            "Concise": "The LevelUp section is good and can be strengthened with a note expanding on observations.",
-            "Inaccurate": "The LevelUp section is not accurate."
           }
         }
       ]
