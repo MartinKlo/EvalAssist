@@ -46,17 +46,8 @@
           "include": true,
           "options": {
             "Accurate": "Correct.",
-            "Wrong Chart": "The Actor Earnings over Time chart should have the",
-            "Innacurate": ""
-          }
-        },
-        {
-          "id": "fr4",
-          "name": "LevelUp",
-          "include": true,
-          "options": {
-            "Accurate": "List of countries with the largest physical area is perfect.",
-            "Inaccurate": "The largest countries by area should be France, Australia, Kiribati, The United States, and Russia."
+            "Wrong Chart": "Issues with the chart lead to inaccurate insights here. The Actor Earnings over Time chart should show the gap narrowing (and even temporarily inverting) before being re-established.",
+            "Innacurate": "The Actor Earnings over Time chart should show the gap narrowing (and even temporarily inverting) before being re-established."
           }
         }
       ]
@@ -127,17 +118,17 @@
           "include": false,
           "options": {
             "Perfect": "",
-            "Needs Color": "",
             "Missing Fields": ""
           }
         },
         {
           "id": "lu3",
-          "name": "Empty",
-          "include": false,
+          "name": "Writing",
+          "include": true,
           "options": {
-            "Completed": "",
-            "Insufficient": ""
+            "Accurate": "The LevelUp writing is perfect!",
+            "Concise": "The LevelUp section is good and can be strengthened with a note expanding on observations.",
+            "Inaccurate": "The LevelUp section is not accurate."
           }
         }
       ]
