@@ -278,6 +278,23 @@ function renderSectionsForProject(proj){
 		const s = document.createElement('summary'); s.textContent = sec.title;
 		dEval.appendChild(s);
 		const rows = document.createElement('div'); rows.className = 'section-rows';
+		// If this section is not General, add an "Aced" control at the top.
+		if(sec.id !== 'general'){
+			const arow = document.createElement('div'); arow.className = 'response-row aced-row'; arow.setAttribute('data-section', sec.id); arow.setAttribute('data-index', '0');
+			const alabel = document.createElement('span'); alabel.className = 'response-label'; alabel.textContent = 'Aced';
+			const asel = document.createElement('select'); asel.className = 'response-select aced-select'; asel.setAttribute('data-section', sec.id); asel.setAttribute('data-index', '0'); asel.setAttribute('aria-label', sec.title + ' Aced');
+			// add placeholder and Yes/No options (populateResponseSelects will not overwrite this special select)
+			const optEmpty = document.createElement('option'); optEmpty.value = ''; optEmpty.textContent = '-- choose --';
+			const optYes = document.createElement('option'); optYes.value = 'Yes'; optYes.textContent = 'Yes';
+			const optNo = document.createElement('option'); optNo.value = 'No'; optNo.textContent = 'No';
+			asel.appendChild(optEmpty); asel.appendChild(optYes); asel.appendChild(optNo);
+			arow.appendChild(alabel); arow.appendChild(asel);
+			rows.appendChild(arow);
+			// insert a visual separator between the Aced control and the following responses
+			const sep = document.createElement('div'); sep.className = 'aced-separator'; sep.setAttribute('data-section', sec.id); sep.setAttribute('aria-hidden', 'true');
+			rows.appendChild(sep);
+		}
+
 		sec.responses.forEach((resp, rIndex) => {
 			const row = document.createElement('div'); row.className = 'response-row'; row.setAttribute('data-section', sec.id); row.setAttribute('data-index', String(rIndex+1));
 			const label = document.createElement('span'); label.className = 'response-label'; label.textContent = resp.name || ('Response ' + (rIndex+1));
@@ -310,6 +327,72 @@ function renderSectionsForProject(proj){
 	// attach live-sync listeners for new checkboxes
 	document.querySelectorAll('.template-includes .include-checkbox').forEach(chk => {
 		chk.addEventListener('change', () => applyIncludeStatesToEvalUI());
+	});
+
+	// --- Aced control: per-section behavior (except General)
+	function setSectionAcedState(sectionId, state){
+		// state: 'Yes'|'No'|''
+		const topIndex = 0; // Aced corresponds to data-index 0
+		const selects = Array.from(document.querySelectorAll('.response-select[data-section="'+sectionId+'"]'));
+		// find the top option key for each response (the first option in the select list)
+			selects.forEach(sel => {
+			const idx = sel.getAttribute('data-index');
+			if(idx === '0') return; // skip aced select itself
+			const row = sel.closest('.response-row');
+			if(!row) return;
+			const includeCheckbox = document.querySelector('.template-includes .include-checkbox[data-section="'+sectionId+'"][data-index="'+idx+'"]');
+				// find separator for this section (toggled only for 'No' state)
+				const sep = document.querySelector('.aced-separator[data-section="'+sectionId+'"]');
+			if(state === 'Yes'){
+				// select first non-empty option (if present), hide the row and include it
+				if(sel.options && sel.options.length){
+					let chosen = '';
+					for(let i=0;i<sel.options.length;i++){
+						const v = sel.options[i].value != null ? String(sel.options[i].value) : '';
+						if(v !== ''){ chosen = v; break; }
+					}
+					if(chosen !== '') sel.value = chosen;
+				}
+				row.classList.add('aced-hidden');
+				if(includeCheckbox) { includeCheckbox.checked = true; }
+			} else if(state === 'No'){
+				// show rows and allow the evaluator to pick options (no option auto-selected)
+				row.classList.remove('aced-hidden');
+				try{ sel.value = ''; sel.selectedIndex = 0; }catch(e){}
+				if(includeCheckbox) { includeCheckbox.checked = true; }
+					// when 'No', show a separator after the Aced control to visually separate it
+					if(sep) { sep.setAttribute('aria-hidden','false'); }
+			} else if(state === 'Empty'){
+				// no Aced option chosen yet: hide rows and mark them excluded (no option selected)
+				row.classList.add('aced-hidden');
+				try{ sel.value = ''; sel.selectedIndex = 0; }catch(e){}
+				if(includeCheckbox) { includeCheckbox.checked = false; }
+			}
+				// for non-'No' states ensure separator is hidden
+				if(state !== 'No' && sep) { sep.setAttribute('aria-hidden', 'true'); }
+		});
+		// apply UI update and persist include states
+		applyIncludeStatesToEvalUI();
+	}
+
+	// attach listeners to each aced-select and enforce initial state
+	document.querySelectorAll('.aced-select').forEach(ac => {
+		const sec = ac.getAttribute('data-section');
+		ac.addEventListener('change', (e) => {
+			const val = e.target.value || '';
+			if(val === 'Yes') setSectionAcedState(sec, 'Yes');
+			else if(val === 'No') setSectionAcedState(sec, 'No');
+			else setSectionAcedState(sec, 'Empty');
+		});
+	});
+
+	// enforce initial aced state for rendered sections
+	document.querySelectorAll('.aced-select').forEach(ac => {
+		const sec = ac.getAttribute('data-section');
+		const val = ac.value || '';
+		if(val === 'Yes') setSectionAcedState(sec, 'Yes');
+		else if(val === 'No') setSectionAcedState(sec, 'No');
+		else setSectionAcedState(sec, 'Empty');
 	});
 	// apply saved include states for project
 	applySavedIncludeStatesForProject(proj);
@@ -389,7 +472,10 @@ function populateResponseSelects(){
 	// filter out reserved/internal keys (like the persisted project JSON) so they don't appear as template options
 	const keys = Object.keys(map).filter(k => k !== '__project_json' && k !== '').sort();
 	selects.forEach(sel => {
-		// determine which options to show: prefer per-response options from projectJsons
+	// skip special Aced selects (data-index 0 or marked with .aced-select)
+	if(sel.classList && sel.classList.contains('aced-select')) return;
+
+	// determine which options to show: prefer per-response options from projectJsons
 		const section = sel.getAttribute('data-section');
 		const index = parseInt(sel.getAttribute('data-index') || '1', 10) - 1; // 0-based
 		let optionKeys = null;
@@ -690,18 +776,26 @@ function generateComments(resp){
 			map[sectionId].push('\u2022 ' + `${label}: ${bodyText}`);
 		});
 
-		// Preserve project section ordering when emitting groups
+		// Preserve project section ordering when emitting groups and prefix each group with the section title
 		const projSections = (proj && Array.isArray(proj.sections)) ? proj.sections : [];
 		projSections.forEach(sec => {
 			const lines = map[sec.id];
-			if(lines && lines.length) specificsBySection.push(lines.join('\n'));
+			if(lines && lines.length){
+				// prefix with the section title followed by a colon, then the bullet lines
+				const groupText = sec.title + ':' + '\n' + lines.join('\n');
+				specificsBySection.push(groupText);
+			}
 			// remove from map to avoid double-emitting
 			if(map[sec.id]) delete map[sec.id];
 		});
 		// any remaining (unknown) sections - emit in insertion order
 		Object.keys(map).forEach(k => {
 			const lines = map[k];
-			if(lines && lines.length) specificsBySection.push(lines.join('\n'));
+			if(lines && lines.length){
+				// unknown section id; use the id as a fallback title
+				const title = k || 'Other';
+				specificsBySection.push(title + ':' + '\n' + lines.join('\n'));
+			}
 		});
 	}
 

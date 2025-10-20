@@ -178,6 +178,14 @@ html[data-theme='dark'] .sidebar .project-link.active{
 	display: none;
 }
 
+/* Hidden state when a section is Aced (top option selected): hide detailed rows */
+.response-row.aced-hidden { display: none; }
+
+
+/* Visual separator shown after the Aced control when 'No' is selected */
+.aced-separator{ height:0.0625rem; background:var(--border); margin:0.25rem 0 0.5rem 0; display:none; }
+.aced-separator[aria-hidden="false"]{ display:block; }
+
 
 /* template editor */
 .template-editor{ margin-top:1.25rem; padding:0.75rem; border-radius:0.375rem; background:var(--panel); border:0.0625rem solid var(--border); }
