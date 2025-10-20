@@ -92,7 +92,7 @@
           "options": {
             "Perfect": "This is exactly how it should look and visually drives home the point.",
             "Filter Error": "",
-            "Field Error": "Make sure that you have Category and Danger List in Columns and Count of World Heritage Sites in Rows."
+            "Field Error": ""
           }
         },
         {
@@ -102,7 +102,8 @@
           "options": {
             "Perfect": "This is perfectly executed. This is one of my favourite charts from all of Part 2 because of how much there is to explore with this. I highly recommend going back and thinking about all the threads there are to pull.",
             "Filter Error": "This chart has a filter error which makes it inaccurate. Missing the Gender filter does not change much, but the category filter can tell completely different stories depending on if it is activated. This is also a look at what other insights this dataset holds that are worth a second look.",
-            "Field Error": ""
+            "Field Error (Sum)": "The Pay field should be averaged instead of summed. The difference between the two leads to drastically different takeaways.",
+            "Field Error": "The Year should be continuous and in columns, and the Average of Pay should be in rows."
           }
         }
       ]
@@ -125,7 +126,7 @@
           "name": "Foundation",
           "include": false,
           "options": {
-            "Perfect": "",
+            "Perfect": "The chart portion looks good. This visualization doesn't need to be perfect since the main focus is on the writing.",
             "Missing Fields": ""
           }
         },
