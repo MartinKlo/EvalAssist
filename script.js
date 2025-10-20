@@ -278,8 +278,9 @@ function renderSectionsForProject(proj){
 		const s = document.createElement('summary'); s.textContent = sec.title;
 		dEval.appendChild(s);
 		const rows = document.createElement('div'); rows.className = 'section-rows';
-		// If this section is not General, add an "Aced" control at the top.
-		if(sec.id !== 'general'){
+		// If this section is not General or LevelUp, add an "Aced" control at the top.
+		// LevelUp sections should not get the Aced control.
+		if(sec.id !== 'general' && sec.id !== 'levelup'){
 			const arow = document.createElement('div'); arow.className = 'response-row aced-row'; arow.setAttribute('data-section', sec.id); arow.setAttribute('data-index', '0');
 			const alabel = document.createElement('span'); alabel.className = 'response-label'; alabel.textContent = 'Aced';
 			const asel = document.createElement('select'); asel.className = 'response-select aced-select'; asel.setAttribute('data-section', sec.id); asel.setAttribute('data-index', '0'); asel.setAttribute('aria-label', sec.title + ' Aced');
@@ -864,6 +865,11 @@ evalForm.addEventListener('submit', async (e) => {
 		const genEl = document.getElementById('evalGenerated');
 		if(genEl) genEl.textContent = output + '\n\n(Copy to clipboard failed)';
 	}
+	// Clear the student name input after Copy is clicked and update the preview
+	try{
+		const nameEl = document.getElementById('name');
+		if(nameEl){ nameEl.value = ''; nameEl.dispatchEvent(new Event('input', { bubbles: true })); }
+	}catch(e){/* ignore */}
 	// saved responses removed; nothing to render here
 	// stay on current tab (do not switch to Responses)
 });
