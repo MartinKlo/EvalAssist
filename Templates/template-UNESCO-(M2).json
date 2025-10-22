@@ -10,9 +10,25 @@
           "name": "Accuracy",
           "include": true,
           "options": {
-            "Accurate": "All the charts were accurate!",
             "Doing Too Much": "Make sure that you are still hitting the essentials, and carefully evaluating decisions around introducing additional elements (such as color).",
             "Inaccurate": "Some of the charts were inaccurate to what was expected from the instructions. Make sure to pick out essential pieces of the prompts and refer to the example visualizations to guide your process."
+          }
+        },
+        {
+          "id": "g2",
+          "name": "Color",
+          "include": true,
+          "options": {
+            "Misused": "The color can get in the way of the visualizations. Human brains are naturally pattern seeking, and incorrect uses of color get in the way of that process. It also introduces potential issues around accessability around colorblindness (or low vision, if high-contrast designs are needed). Keep using color in your visualizations, but make sure that it is always intentional and compliments your work.",
+            "Underused": ""
+          }
+        },
+        {
+          "id": "g3",
+          "name": "Late",
+          "include": true,
+          "options": {
+            "Late Verbage": "Make sure to give yourself enough time to get the milestone in on time. Alternatively, if you have a valid reason for being late, make sure to reach out to HelpHub to get the extension. I want to make sure you get full credit for the work that you do."
           }
         }
       ]

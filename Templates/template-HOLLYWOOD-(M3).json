@@ -10,7 +10,6 @@
           "name": "Accuracy",
           "include": true,
           "options": {
-            "Accurate": "All the charts were accurate!",
             "Doing Too Much": "Make sure that you are still hitting the essentials, and carefully evaluating decisions around introducing additional elements (such as color).",
             "Inaccurate": "Some of the charts were inaccurate to what was expected from the instructions. Make sure to pick out essential pieces of the prompts and refer to the example visualizations to guide your process."
           }
@@ -21,6 +20,14 @@
           "include": true,
           "options": {
             "Late Verbage": "Make sure to give yourself enough time to get the milestone in on time. Alternatively, if you have a valid reason for being late, make sure to reach out to HelpHub to get the extension. I want to make sure you get full credit for the work that you do."
+          }
+        },
+        {
+          "id": "g3",
+          "name": "Filters",
+          "include": true,
+          "options": {
+            "Recurring Issues": "Throughout the milestone there are issues with the filters. This comes back to making notes about the exact specifications from the tasks and understanding the nuances of the data."
           }
         }
       ]
@@ -70,9 +77,10 @@
           "include": true,
           "options": {
             "Perfect": "You have the data split up into categories. Looking good.",
-            "Line Chart": "This chart should be a bar chart to match the graphic. The way to correct this is to set the Year to Discrete.",
-            "Filters": "The filters need revision. Gender should be set to male and female, the category should be restricted to actors and acresses, and the years should be limited to 2016 through 2020.",
-            "Field Error": "The Sum of Pay should be in columns and a discrete Year followed by Gender should be in rows."
+            "Filter Error": "The filters need revising. Gender should be set to male and female, the category should be restricted to actors and acresses, and the years should be limited to 2016 through 2020.",
+            "Field Error": "The Sum of Pay should be in columns and a discrete Year followed by Gender should be in rows.",
+            "Field Error (Switched Rows)": "The gender and year are in the opposite order. This makes it harder to compare between Actors and Actresses for any given year. While this order makes it easier to compare within categories across years, the later line charts better serve this purpose.",
+            "Uncommon: Line Chart": "This chart should be a bar chart to match the graphic. The way to correct this is to set the Year to Discrete."
           }
         },
         {
@@ -81,8 +89,8 @@
           "include": true,
           "options": {
             "Perfect": "Good work. This is a simple but effective chart that can get a quick read on the overall situation.",
-            "Not Averaged": "Make sure to switch Pay to the Average to get an accurate read.",
-            "Field Error": "For this chart, Gender should be in either columns or rows, and the Average of the Pay should be in the other."
+            "Field Error": "For this chart, Gender should be in either columns or rows and the Average of the Pay should be in the other.",
+            "Field Error (Sum)": "Make sure to switch Pay to the Average to get an accurate read."
           }
         },
         {
@@ -102,8 +110,8 @@
           "options": {
             "Perfect": "This is perfectly executed. This is one of my favourite charts from all of Part 2 because of how much there is to explore with this. I highly recommend going back and thinking about all the threads there are to pull.",
             "Filter Error": "This chart has a filter error which makes it inaccurate. Missing the Gender filter does not change much, but the category filter can tell completely different stories depending on if it is activated. This is also a look at what other insights this dataset holds that are worth a second look.",
-            "Field Error (Sum)": "The Pay field should be averaged instead of summed. The difference between the two leads to drastically different takeaways.",
-            "Field Error": "The Year should be continuous and in columns, and the Average of Pay should be in rows."
+            "Field Error": "The Year should be continuous and in columns, and the Average of Pay should be in rows.",
+            "Field Error (Sum)": "The Pay field should be averaged instead of summed. The difference between the two leads to drastically different takeaways."
           }
         }
       ]

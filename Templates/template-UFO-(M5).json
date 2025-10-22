@@ -1,5 +1,5 @@
 {
-  "name": "UFO (M5)",
+  "name": "STORYTELLING (M4)",
   "sections": [
     {
       "id": "general",
@@ -10,9 +10,25 @@
           "name": "Accuracy",
           "include": true,
           "options": {
-            "Accurate": "All the charts were accurate!",
             "Doing Too Much": "Make sure that you are still hitting the essentials, and carefully evaluating decisions around introducing additional elements (such as color).",
             "Inaccurate": "Some of the charts were inaccurate to what was expected from the instructions. Make sure to pick out essential pieces of the prompts and refer to the example visualizations to guide your process."
+          }
+        },
+        {
+          "id": "g2",
+          "name": "Color",
+          "include": true,
+          "options": {
+            "Misused": "The color can get in the way of the visualizations. Human brains are naturally pattern seeking, and incorrect uses of color get in the way of that process. It also introduces potential issues around accessability around colorblindness (or low vision, if high-contrast designs are needed). Keep using color in your visualizations, but make sure that it is always intentional and compliments your work.",
+            "Underused": ""
+          }
+        },
+        {
+          "id": "g3",
+          "name": "Late",
+          "include": true,
+          "options": {
+            "Late Verbage": "Make sure to give yourself enough time to get the milestone in on time. Alternatively, if you have a valid reason for being late, make sure to reach out to HelpHub to get the extension. I want to make sure you get full credit for the work that you do."
           }
         }
       ]
@@ -23,39 +39,39 @@
       "responses": [
         {
           "id": "fr1",
-          "name": "Sites by Type",
+          "name": "",
           "include": true,
           "options": {
-            "Accurate": "This section is accurate. Great job getting the count of each category!",
-            "Inaccurate": "The counts for each category should be: Cultural (869), Natural (213), and Mixed (39)."
+            "Accurate": "",
+            "Inaccurate": ""
           }
         },
         {
           "id": "fr2",
-          "name": "Danger Factors",
+          "name": "",
           "include": true,
           "options": {
-            "Thorough and Insightful": "Not only are these great factors on their own, but you did an excellent job connecting them for the reader. Keep this up!",
-            "Concise": "These are good factors, but make sure that you expand on these to your reader.",
-            "Insufficient": "There should be more detail here. Make sure to not only list at least two factors, but also expand on the connection."
+            "Thorough and Insightful": "",
+            "Concise": "",
+            "Insufficient": ""
           }
         },
         {
           "id": "fr3",
-          "name": "Heritage Sites",
+          "name": "",
           "include": true,
           "options": {
-            "Accurate": "Got the list for number of heritage sites down perfectly.",
-            "Inaccurate": "The list of countries with the largest number of heritage sites should be China, Italy, Spain, France, and Germany."
+            "Accurate": "",
+            "Inaccurate": ""
           }
         },
         {
           "id": "fr4",
-          "name": "Largest Area",
+          "name": "",
           "include": true,
           "options": {
-            "Accurate": "List of countries with the largest physical area is perfect.",
-            "Inaccurate": "The largest countries by area should be France, Australia, Kiribati, The United States, and Russia."
+            "Accurate": "",
+            "Inaccurate": ""
           }
         }
       ]
@@ -66,51 +82,53 @@
       "responses": [
         {
           "id": "c1",
-          "name": "SitesPerCategory",
+          "name": "",
           "include": true,
           "options": {
-            "Perfect": "You have the data split up into categories. Looking good.",
-            "Wrong Fields": "Make sure you have the Category in Columns and count of World Heritage Sites in Rows."
+            "Perfect": "",
+            "Filter Error": "",
+            "Field Error": "",
+            "Field Error (Wrong Height)": "Here you should be using the Above average height variables. These take the original height values and turn them into a boolean value indicating whether each country is above or below that average. We can create the same chlorepleth from these fields, but that is the focus of the LevelUp."
           }
         },
         {
           "id": "c2",
-          "name": "Stacked-EndangeredSites",
+          "name": "",
           "include": true,
           "options": {
-            "Perfect": "You have the fields in the right place to create the stacked horizontal bar chart. Great work!",
-            "No Color": "Make sure to add color to the 'Danger List' field on the marks card.",
-            "Not Stacked": "This chart should be a stacked bar chart. Make sure to put the 'Danger List' field in colors on the marks card.",
-            "Missing Fields": "This chart is missing some fields. Make sure to have the Count of World Heritage Sites in Columns, Category in Rows, and Danger List in Colors on the marks card."
+            "Perfect": "",
+            "Filter Error": "",
+            "Field Error": ""
           }
         },
         {
           "id": "c3",
-          "name": "Side-EndangeredSites",
+          "name": "",
           "include": true,
           "options": {
             "Perfect": "",
-            "Difficult Comparison": "Here it looks like the side-by-side comparison didn't pull through. To make comparisons easy: aim to get the bars lined up with each other. If you want a vertical bar chart, then put the comparison to the side. If you want a horizontal bar chart, then put the comparison above or below.",
-            "No Comparison": "This chart should have a side-by-side comparison of endangered vs non-endangered sites. This way the reader can easily compare the values across each category.",
-            "Wrong Fields": "Make sure that you have Category and Danger List in Columns and Count of World Heritage Sites in Rows."
+            "Filter Error": "",
+            "Field Error": ""
           }
         },
         {
           "id": "c4",
-          "name": "HeritageSites",
+          "name": "",
           "include": true,
           "options": {
-            "Perfect": "You have the count down and created a perfect chart.",
-            "Vertical Bars": "This chart should be horizontal bars to match the example. This is a best practice for long labels because it makes it easier to read."
+            "Perfect": "",
+            "Filter Error": "",
+            "Field Error": ""
           }
         },
         {
           "id": "c5",
-          "name": "HeritageArea",
+          "name": "",
           "include": true,
           "options": {
-            "Perfect": "Heritage Area per Country looks perfect!",
-            "Vertical Bars": "This chart should have horizontal bars. This way the country labels are easier to read with the chart."
+            "Perfect": "",
+            "Filter Error": "",
+            "Field Error": ""
           }
         }
       ]
@@ -124,27 +142,27 @@
           "name": "Attempted",
           "include": true,
           "options": {
-            "Yes": "Good call trying out this LevelUp. This one covers a niche topic, but it is a great way to get familiar early on.",
-            "No": "I will always recommend trying out the LevelUp. Not only is it a good way to get some extra cushion on the evaluations, but you also get further opportunities to develop your skills. This one specifically further develops your experience with customizing charts - something we dive into later on."
+            "Yes": "",
+            "No": ""
           }
         },
         {
           "id": "lu2",
           "name": "Foundation",
-          "include": true,
+          "include": false,
           "options": {
-            "Perfect": "Chart foundation is perfect.",
-            "Needs Color": "The chart before the logarithmic scale needs color added.",
-            "Missing Fields": "The chart for the LevelUp is missing a few fields. It should include the Sum of Area Hectares in Columns, Names in Rows, Country in filters set to France, attributes in marks as a tooltip, and Category in the colors."
+            "Perfect": "",
+            "Missing Fields": ""
           }
         },
         {
           "id": "lu3",
-          "name": "Logarithmic Scale",
+          "name": "Writing",
           "include": true,
           "options": {
-            "Completed": "Logarithmic scale is completely setup. Fantastic cap to the milestone!",
-            "Insufficient": "To create the logarithmic scale, right click on the axis and select 'Edit Axis'. Then check the box for 'Logarithmic Scale'."
+            "Accurate": "",
+            "Concise": "",
+            "Inaccurate": ""
           }
         }
       ]
@@ -161,7 +179,7 @@
       "Superior": "Your work demonstrates professionalism, attention to detail, and full-effort throughout. Work like this will set you up as a reliable contributor and foundational team member.",
       "Strong": "Your work is accurate and demonstrates good effort. I recommend implementing the feedback when refining your milestone.",
       "Needs Revision": "Revising your milestone will help you break down the road blocks you encountered, set you up for success with the portfolio project, and prepare this milestone for public sharing. If you spent a lot of time on this milestone and feel frustrated, taking some time away can let you process the problems in the background and reset your perspective.",
-      "Insufficient": "I can tell that this milestone was a challenge - either because something with the material didn't click or because you didn't have enough time to process. That's okay and happens to everyone. There's good work to build on here, and I have included detailed feedback to help you revise your submission. Revising your milestone will help you break down the road blocks you encountered, set you up for success with the portfolio project, and prepare this milestone for public sharing. If you feel frustrated, taking some time away can let you process the problems in the background and reset your perspective."
+      "Insufficient": "I can tell that this milestone was a challenge - either because something with the material didn't click or because you didn't have enough time to process. That's okay and happens to everyone. There's good work to build on here, and I have included detailed feedback to help you revise your submission. Revising your milestone will help you break down the road blocks you encountered, set you up for success with the portfolio project, and prepare this milestone for public sharing. If you spent a lot of time on this milestone and feel frustrated, taking some time away can let you process the problems in the background and reset your perspective."
     },
     "overview": {
       "Superior": "Here is your detailed feedback:",
