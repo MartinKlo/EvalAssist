@@ -39,39 +39,49 @@
       "responses": [
         {
           "id": "fr1",
-          "name": "",
+          "name": "Geographical Pattern of Height",
           "include": true,
           "options": {
-            "Accurate": "",
-            "Inaccurate": ""
+            "Thorough and Insightful": "This is a thorough and insightful response to the distribution of countries with below average heights.",
+            "Concise": "This response is on the shorter end and would benefit from more detail - either in listing the countries, describing the pattern, or in the explanation of the trend.",
+            "Inaccurate": "This does not accurately describe the distribution of countries that are below the global average."
           }
         },
         {
           "id": "fr2",
-          "name": "",
+          "name": "3 South American Countries",
           "include": true,
           "options": {
-            "Thorough and Insightful": "",
-            "Concise": "",
-            "Insufficient": ""
+            "Accurate": "Perfect! The three countries are Argentina, Uruguay, and Costa Rica.",
+            "Incorrect": "The three countries should be Argentina, Uruguay, and Costa Rica."
           }
         },
         {
           "id": "fr3",
-          "name": "",
+          "name": "Peak Sales",
           "include": true,
           "options": {
-            "Accurate": "",
-            "Inaccurate": ""
+            "Thorough and Insightful": "This is a great analysis of the cause of the peak. Switching from physical to digital distribution changed the whole landscape of the music industry.",
+            "Concise": "This is a good answer, but it should be expanded. There's a lot to unpack from the chart that we made. For example: Digital downloads changed the landscape of the music industry. Even if we ignore the prevalence of piracy, people were suddenly able to buy an album once and keep downloading it when needed. Physical media carries with it the risk of damage (such as scratches or stretched-out tape decks) that would require someone to purchase a replacement.",
+            "Inaccurate": "This answer does not accurately reflect the information shown in the chart. The chart provides good initial observations that can be built upon by further research."
           }
         },
         {
           "id": "fr4",
-          "name": "",
+          "name": "Dominant Formats",
           "include": true,
           "options": {
-            "Accurate": "",
-            "Inaccurate": ""
+            "Accurate": "Perfect!",
+            "Inaccurate": "In 1980, the main formats were LP/EP and Cassettes. In 2000, CDs dominated the market with 95% of all recorded sales. By 2019, the landscape had once again shifted and was now dominated by paid subscriptions."
+          }
+        },
+        {
+          "id": "fr5",
+          "name": "Top Video Game Genres",
+          "include": true,
+          "options": {
+            "Accurate": "Perfect wrap up for the written section!",
+            "Inaccurate": "The top three video game genres by sales are Action, Sports, and Shooter."
           }
         }
       ]
@@ -82,53 +92,40 @@
       "responses": [
         {
           "id": "c1",
-          "name": "",
+          "name": "Male/Female Heights",
           "include": true,
           "options": {
-            "Perfect": "",
-            "Filter Error": "",
-            "Field Error": "",
+            "Perfect": "Good work with the Chlorepleths! These are are an easy way to create impressive, insightful, and professional visualizations.",
+            "Field Error": "Make sure to put the Above Avg Height and Country fields into the columns/rows before hitting the 'Show Me' button to create the Chlorepleths.",
             "Field Error (Wrong Height)": "Here you should be using the Above average height variables. These take the original height values and turn them into a boolean value indicating whether each country is above or below that average. We can create the same chlorepleth from these fields, but that is the focus of the LevelUp."
           }
         },
         {
           "id": "c2",
-          "name": "",
+          "name": "Overall Music Sales",
           "include": true,
           "options": {
-            "Perfect": "",
-            "Filter Error": "",
+            "Perfect": "This looks perfect.",
             "Field Error": ""
           }
         },
         {
           "id": "c3",
-          "name": "",
+          "name": "Music Sales by Format",
           "include": true,
           "options": {
-            "Perfect": "",
-            "Filter Error": "",
-            "Field Error": ""
+            "Perfect": "This is perfect! This is one of my favourite visualizations for this milestone because of how much it communicates.",
+            "Filter Error": "Make sure to filter the formats to only 'Cassette', 'CD', 'Download', 'LP/EP', and 'Paid Subscriptions'.",
+            "Field Error": "The year should be in the columns, and the Sum of Total Sales should be in the rows."
           }
         },
         {
           "id": "c4",
-          "name": "",
+          "name": "Video Game Sales",
           "include": true,
           "options": {
-            "Perfect": "",
-            "Filter Error": "",
-            "Field Error": ""
-          }
-        },
-        {
-          "id": "c5",
-          "name": "",
-          "include": true,
-          "options": {
-            "Perfect": "",
-            "Filter Error": "",
-            "Field Error": ""
+            "Perfect": "This is correct!",
+            "Field Error": "This visualization should have the Sum of Global Sales in the columns and the Genre in the rows."
           }
         }
       ]
@@ -142,27 +139,19 @@
           "name": "Attempted",
           "include": true,
           "options": {
-            "Yes": "",
-            "No": ""
+            "Yes": "Thank you for taking on the LevelUp! While you could do this with a calculated field (like earlier in the milestone), this is a great way to learn about color scale customization.",
+            "No": "While note required, I encourage you to try the LevelUp when you have time. This LevelUp does a great job of introducing color scale customization."
           }
         },
         {
           "id": "lu2",
-          "name": "Foundation",
+          "name": "Visualization",
           "include": false,
           "options": {
-            "Perfect": "",
-            "Missing Fields": ""
-          }
-        },
-        {
-          "id": "lu3",
-          "name": "Writing",
-          "include": true,
-          "options": {
-            "Accurate": "",
-            "Concise": "",
-            "Inaccurate": ""
+            "Perfect": "Great job creating a stepped chloropleth map to show the distribution of heights across countries!",
+            "Stepped Color, Wrong # steps": "Make sure to use the correct number of steps for your color scale. This visualization was aiming for 2.",
+            "Field Error": "You can drop the country and sum of Avg Height into the columns/rows before hitting the 'Show Me' button to create the Chlorepleth.",
+            "Field Error (Above Avg Height)": "This visualization should use the Average Height data. Using the Above Avg Height field will keep you from seeing how adjusting the color steps affects the chloropleth."
           }
         }
       ]
@@ -170,14 +159,14 @@
   ],
   "messages": {
     "greeting": {
-      "Superior": "This is a superior submission",
-      "Strong": "This is a strong submission",
-      "Needs Revision": "This is good submission that needs revision",
+      "Superior": "Superior submission",
+      "Strong": "Strong submission",
+      "Needs Revision": "Good, revisable submission",
       "Insufficient": "This milestone has good pieces to build on"
     },
     "intro": {
-      "Superior": "Your work demonstrates professionalism, attention to detail, and full-effort throughout. Work like this will set you up as a reliable contributor and foundational team member.",
-      "Strong": "Your work is accurate and demonstrates good effort. I recommend implementing the feedback when refining your milestone.",
+      "Superior": "Superior quality work - thank you for the effort that you've put into this!",
+      "Strong": "Accurate and good effort! I recommend implementing the feedback when refining your milestone.",
       "Needs Revision": "Revising your milestone will help you break down the road blocks you encountered, set you up for success with the portfolio project, and prepare this milestone for public sharing. If you spent a lot of time on this milestone and feel frustrated, taking some time away can let you process the problems in the background and reset your perspective.",
       "Insufficient": "I can tell that this milestone was a challenge - either because something with the material didn't click or because you didn't have enough time to process. That's okay and happens to everyone. There's good work to build on here, and I have included detailed feedback to help you revise your submission. Revising your milestone will help you break down the road blocks you encountered, set you up for success with the portfolio project, and prepare this milestone for public sharing. If you spent a lot of time on this milestone and feel frustrated, taking some time away can let you process the problems in the background and reset your perspective."
     },
