@@ -150,6 +150,7 @@
           "options": {
             "Perfect": "Great job creating a stepped chloropleth map to show the distribution of heights across countries!",
             "Stepped Color, Wrong # steps": "Make sure to use the correct number of steps for your color scale. This visualization was aiming for 2.",
+            "Default Color Scale": "Make sure to change the color scale from the default gradient to stepped. This is found by hitting 'Edit Colors' in the scale's dropdown menu. This will divide the chart into categories (above or below average).",
             "Field Error": "You can drop the country and sum of Avg Height into the columns/rows before hitting the 'Show Me' button to create the Chlorepleth.",
             "Field Error (Above Avg Height)": "This visualization should use the Average Height data. Using the Above Avg Height field will keep you from seeing how adjusting the color steps affects the chloropleth."
           }
